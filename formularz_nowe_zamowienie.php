@@ -95,11 +95,18 @@
                             $data_przycisk_zapisu = $_POST['data_przycisk_zapisz'];
                             //var_dump($data_przycisk_zapisu);
                             /////////konvertowanie daty ///////////////////
+                            /*
                             $data_miesiac = substr($data_przycisk_zapisu,0, 2);
                             $data_dzien = substr($data_przycisk_zapisu,3, 2);
                             $data_rok = substr($data_przycisk_zapisu,6, 5);
+                             * 
+                             */
+                            
+                            //print_r($data_przycisk_zapisu);
 
-                            $data_razem = $data_rok."-".$data_miesiac."-".$data_dzien;
+                            //$data_razem = $data_rok."-".$data_miesiac."-".$data_dzien;
+                            
+                            $data_razem = $data_przycisk_zapisu;
                             $data = $data_razem;
                             
                             //$ilosc = $_POST['wielkosc_tab'];
@@ -133,19 +140,40 @@
                                         $status_do_zmiany_sprawdzony = $rekord_status_do_zmiany['Status_zamowienia'];
                                         
                                         $polocz->close();
-                                        if($status_do_zmiany_sprawdzony == "DO DRUKU")
+                                        
+                                        $odbiorca = $_POST['wybrany_klient'];
+                                        
+                                        if($odbiorca === "OGANES HMAJAK")
                                         {
-                                            $polocz->open();
-                                            $query_status = "UPDATE ZAMOWIENIA_TAB SET Status_zamowienia = 'DO AKCEPTACJI' WHERE Nr_wiersza = '$check_nr_wiersza';";
-                                            $wynik_status = mysql_query($query_status);
-                                            $polocz->close();
-                                        }
-                                        if($status_do_zmiany_sprawdzony == "DO AKCEPTACJI")
-                                        {
-                                            $polocz->open();
-                                            $query_status = "UPDATE ZAMOWIENIA_TAB SET Status_zamowienia = 'DO DRUKU' WHERE Nr_wiersza = '$check_nr_wiersza';";
-                                            $wynik_status = mysql_query($query_status);
-                                            $polocz->close();
+                                            if($status_do_zmiany_sprawdzony == "DO DRUKU")
+                                            {
+                                                $polocz->open();
+                                                $query_status = "UPDATE ZAMOWIENIA_TAB SET Status_zamowienia = 'DO AKCEPTACJI' WHERE Nr_wiersza = '$check_nr_wiersza';";
+                                                $wynik_status = mysql_query($query_status);
+                                                $polocz->close();
+                                            }
+                                            if($status_do_zmiany_sprawdzony == "DO AKCEPTACJI")
+                                            {
+                                                $polocz->open();
+                                                $query_status = "UPDATE ZAMOWIENIA_TAB SET Status_zamowienia = 'DO DRUKU' WHERE Nr_wiersza = '$check_nr_wiersza';";
+                                                $wynik_status = mysql_query($query_status);
+                                                $polocz->close();
+                                            }
+                                        }else{
+                                            if($status_do_zmiany_sprawdzony == "DO DRUKU")
+                                            {
+                                                $polocz->open();
+                                                $query_status = "UPDATE ZAMOWIENIA_TAB SET Status_zamowienia = 'ZALICZKA' WHERE Nr_wiersza = '$check_nr_wiersza';";
+                                                $wynik_status = mysql_query($query_status);
+                                                $polocz->close();
+                                            }
+                                            if($status_do_zmiany_sprawdzony == "ZALICZKA")
+                                            {
+                                                $polocz->open();
+                                                $query_status = "UPDATE ZAMOWIENIA_TAB SET Status_zamowienia = 'DO DRUKU' WHERE Nr_wiersza = '$check_nr_wiersza';";
+                                                $wynik_status = mysql_query($query_status);
+                                                $polocz->close();
+                                            }
                                         }
                                           
                                          
@@ -202,12 +230,15 @@
                                     $data=$_POST['data_data'];
 
 
+                                    /*
                                     $data_miesiac = substr($data,0, 2);
                                     $data_dzien = substr($data,3, 2);
                                     $data_rok = substr($data,6, 5);
 
                                     $data_razem = $data_rok."-".$data_miesiac."-".$data_dzien;
                                     $data = $data_razem;
+                                     * 
+                                     */
                                     //print"data_razem: ";
                                     //print_r($data_razem);
                             }
@@ -218,7 +249,8 @@
                         {
                                 if($_POST['artykul'])  
                                 {
-                                    
+                                    $status_wybrany = $_POST['combo_status'];
+                                                                      
                                     $zamowienie_nr = $_POST['zamowienie_nr'];
                                     $odbiorca = $_POST['wybrany_klient']; 
                                         $polocz->open();
@@ -294,7 +326,8 @@
                                         $polocz->open();
                                         mysql_select_db("ZAMOWIENIA_DRUKARNIA") or die ("nie ma zamowienia_drukarnia");
 
-                                        $query = "INSERT INTO ZAMOWIENIA_TAB VALUES('$odbiorca','$numer_zamowienia','$zamowienie_nr','$data','$artykul','$ilosci','$metry_lub_sztuki','','$wzor','$uwagi','DO DRUKU','$ilosc_wierszy','0','', '$zalogowany');";
+                                        //$query = "INSERT INTO ZAMOWIENIA_TAB VALUES('$odbiorca','$numer_zamowienia','$zamowienie_nr','$data','$artykul','$ilosci','$metry_lub_sztuki','','$wzor','$uwagi','DO DRUKU','$ilosc_wierszy','0','', '$zalogowany');";
+                                        $query = "INSERT INTO ZAMOWIENIA_TAB VALUES('$odbiorca','$numer_zamowienia','$zamowienie_nr','$data','$artykul','$ilosci','$metry_lub_sztuki','','$wzor','$uwagi','$status_wybrany','$ilosc_wierszy','0','', '$zalogowany');";
 
                                         $wynik = mysql_query($query);
 
@@ -390,13 +423,15 @@
                     print'<div align=center>';
                                         print"<TABLE CELLPADDING=0 CELLSPACING=0 BORDER=0 style='width: 90%; height: 100%;'>";
                                             print"<TR>";
-                                                print"<TD style='width: 80%;'>";  
+                                                //print"<TD style='width: 80%;'>"; 
+                                                print"<TD class='td_pole_daty'>";
                                                     if($_POST['data_data'] == "")
                                                     {
                                                        $data_miesiac_p=date("m");
                                                        $data_dzien_p=date("d");
                                                        $data_rok_p=date("Y");
-                                                       $data_wybrana = $data_miesiac_p."/".$data_dzien_p."/".$data_rok_p;
+                                                       //$data_wybrana = $data_miesiac_p."/".$data_dzien_p."/".$data_rok_p;
+                                                       $data_wybrana = $data_rok_p."-".$data_miesiac_p."-".$data_dzien_p;
                                                     }else{
                                                        $data_wybrana = $_POST['data_data'];
                                                     }
@@ -404,11 +439,13 @@
                                                     {
                                                        $data_wybrana = $data_przycisk_zapisu;
                                                     }
-                                                    print"<input class='text_box' style='width: 90%;' type=\"text\" id=\"datepicker\" name=\"data_data\" value=\"$data_wybrana\">";
-
-                                                print"</TD>";                 
-                                                print"<TD style='width: 20%;'>";
-                                                    print'<INPUT style="width: 100%;" TYPE="submit" VALUE="Wybierz" CLASS="btn">'; 
+                                                    //print"<input class='text_box' style='width: 90%;' type=\"text\" id=\"datepicker\" name=\"data_data\" value=\"$data_wybrana\">";
+                                                    print"<input class='text_box' type='date' name='data_data' value='".$data_wybrana."'>";                                                   
+                                                print"</TD>";  
+                                                print"<TD class='td_pole_spacja'></TD>";
+                                                print"<TD class='td_pole_przycisk'>";
+                                                    //print'<INPUT style="width: 100%;" TYPE="submit" VALUE="Wybierz" CLASS="btn">'; 
+                                                    print'<INPUT TYPE="submit" VALUE="Wybierz" CLASS="btn">';
                                                 print"</TD>";
                                             print"</TR>";
                                         print"</TABLE>";
@@ -577,25 +614,7 @@
                         print"<td></td>";
                         print"<td></td>";
                         print"<td></td>";
-                        print"<td align=center>";
-                        
-                            
-                            
-                            
-                            /*
-                            for($i=0; $i<$k; $i++)
-                            {
-                                print"<br>i = ";
-                                print_r($i);
-                                print"=";
-                                print_r($tab_nr_wiersza[$i]);
-                                print "<INPUT TYPE=hidden NAME=pobrany_nr_wiersza[$i] VALUE=$tab_nr_wiersza[$i]>";
-                            }
-                            print"<br>";
-                            print'<INPUT TYPE="submit" NAME="zapisz" VALUE="Zapisz" CLASS="btn">';
-                            */
-                             
-                            
+                        print"<td align=center>";                   
                         print"</td>";
                     print"</tr>";
             print"</TABLE>";
@@ -646,22 +665,7 @@
                                             $ilosci = htmlspecialchars($_POST['ilosc']);		
                                                     $metry_lub_sztuki = htmlspecialchars($_POST['metry_sztuki']);		
                                             $wzor = htmlspecialchars($_POST['wzory']);		
-                                            $uwagi = htmlspecialchars($_POST['uwagi']);
-
-                                                    /*
-                                                    print"artykul :".$artykul;
-                                                    print'<br>';
-                                                    print"ilosc :".$ilosci;
-                                                    print'<br>';
-                                                    print"metry :".$metry_lub_sztuki;
-                                                    print'<br>';
-                                                    print"wzor :".$wzor;
-                                                    print'<br>';
-                                                    print"uwagi :".$uwagi;
-                                                    */
-
-                                    //print"wchodzi szukany artykul : ".$_SESSION['zapamietany_artykul'];
-
+                                            $uwagi = htmlspecialchars($_POST['uwagi']);                                                
                                 }
 
                                 if(isset($_POST['szukaj_wzor_przycisk']))///klikniety przycisk szukaj wzor
@@ -675,22 +679,6 @@
                                             $metry_lub_sztuki = htmlspecialchars($_POST['metry_sztuki']);		
                                             $wzor = "";		
                                             $uwagi = htmlspecialchars($_POST['uwagi']);
-
-
-                                                    /*
-                                                    print"artykul :".$artykul;
-                                                    print'<br>';
-                                                    print"ilosc :".$ilosci;
-                                                    print'<br>';
-                                                    print"metry :".$metry_lub_sztuki;
-                                                    print'<br>';
-                                                    print"wzor :".$wzor;
-                                                    print'<br>';
-                                                    print"uwagi :".$uwagi;
-                                                    */
-
-                                    //print"wchodzi szukany artykul : ".$_SESSION['zapamietany_artykul'];
-
                                 }
 
 
@@ -789,7 +777,25 @@
                                 print '<TD></TD>';
                                 print '<TD></TD>';
                                 print '<TD align=left><INPUT TYPE="submit" NAME="Dodaj" VALUE="Dodaj" CLASS="btn"></TD>';
-                                print '<TD></TD>';
+                                print '<TD>';
+                                
+                                    print'<SELECT class="opis_select" NAME="combo_status" style="width: 50%;">';
+                                        
+                                                //print("<OPTION VALUE=\"$metry_lub_sztuki\">$metry_lub_sztuki</OPTION>");
+                                                print"<OPTION VALUE='ZALICZKA'>ZALICZKA</OPTION>";
+                                                print"<OPTION VALUE='DO DRUKU'>DO DRUKU</OPTION>";
+                                                print"<OPTION SELECTED VALUE='ZALICZKA'>ZALICZKA</OPTION>";
+                                        
+                                                              
+                                                if($status_wybrany != "")
+                                                {
+                                                    print"<OPTION SELECTED VALUE='$status_wybrany'>$status_wybrany</OPTION>";
+                                                }
+                                        
+                                                //print("<OPTION VALUE=\"$metry_sztuki[$i]\">".$metry_sztuki[$i]);
+                                          
+                                    print'</SELECT>';                              
+                                print'</TD>';
                             print '</TR>';
                             ////////////////////////koniec checkbox zapamietaj////////////////////////////////
                             $szukany_artykul_zapamietany = $_SESSION['zapamietany_artykul'];
