@@ -39,19 +39,20 @@
 
 <body>
 
+
+
+<DIV class="panel_glowny">
+
+
+<TABLE cellpadding = 0  cellspacing = 0 border = 0 style="width: 100%; height: 100%;">
+    <tr>
+        <td align=center height=5px>
+        </td>
+    </tr>
+    <tr>
+        <td align=center>
+            <?PHP require_once "zalogowany_banery.php"; ?>
 <?PHP
-
-print'<DIV class="panel_glowny">';
-
-
-print'<TABLE cellpadding = 0  cellspacing = 0 border = 0 style="width: 100%; height: 100%;">';
-    print"<tr>";
-        print"<td align=center height=5px>";
-        print"</td>";
-    print"</tr>";
-    print"<tr>";
-        print"<td align=center>";
-            require_once "zalogowany_banery.php";
         print"</td>";
     print"</tr>";
     print"<tr>";
