@@ -41,7 +41,7 @@
                             $i++;   
                         }
                         $rok = array('2013' => '2013','2014' => '2014', '2015' => '2015', '2016' => '2016', '2017' => '2017', '2018' => '2018', '2019' => '2019', '2020' => '2020', '2021' => '2021', '2022' => '2022');
-                        $status = array('DO AKCEPTACJI' => 'DO AKCEPTACJI', 'DO DRUKU' => 'DO DRUKU', 'WYDRUKOWANE' => 'WYDRUKOWANE', 'MAGAZYN_DAMAZ' => 'MAGAZYN_DAMAZ');
+                        $status = array('DO AKCEPTACJI' => 'DO AKCEPTACJI', 'DO DRUKU' => 'DO DRUKU', 'WYDRUKOWANE' => 'WYDRUKOWANE', 'MAGAZYN_DAMAZ' => 'MAGAZYN_DAMAZ', 'ZALICZKA' => 'ZALICZKA');
 
 if(!$_POST['opcja'] && !$_POST['opcja02'])  ///NIE wyswietla gdy jest wybrany klient
 {
@@ -91,8 +91,9 @@ if($_POST['opcja'] || $_POST['opcja02'])
                                     {
                                         $wybrany_status = htmlspecialchars($wartosc_status);
                                     }
-                                }   
+                                }                                 
                             }
+                            
                             if(!$_POST['filtr_uwagi'])
                             {                
                                 if($_POST['zapisz_uwagi'])
@@ -119,6 +120,17 @@ if($_POST['opcja'] || $_POST['opcja02'])
                                     $wybrany_rok = $_POST['rok_filtr_uwagi'];
                                     $_SESSION['rok'] = $wybrany_rok;                     
                                 }               
+                            }
+                            if($_POST['zmien_status_zaliczka'])
+                            {
+                                zmiana_statusu();
+                                /*
+                                $_SESSION['odbiorca'] = $odbiorca;
+                                $_SESSION['rok'] = $wybrany_rok;
+                                $_SESSION['status'] = $wybrany_status;
+                                 * 
+                                 */
+                                
                             }
                             if($odbiorca == "")
                             {
@@ -173,6 +185,8 @@ if($_POST['opcja'] || $_POST['opcja02'])
                                 $ile_wierszy = $rekord_ile_wierszy['COUNT(*)'];
                                 $polocz->close();
                             }
+?>                         
+<?PHP
     print'<DIV class="do_tabeli">';                       
     require_once "zalogowany_banery.php";
    // print"<br>";       
@@ -295,6 +309,7 @@ print'<TABLE border="0" style="width: 100%; height: 100%;">';
                             $temp_zamowienie = 0;
                             $k=0;
                             $w=0;
+                            $ile_wierszy_status_zaliczka = 0;
                             $suma_wierszy = $ile_wierszy - 100;
                             if($suma_wierszy >= 0)
                             {
@@ -344,7 +359,15 @@ print'<TABLE border="0" style="width: 100%; height: 100%;">';
                                 {
                                     $kolor = '#ffe6e6';
                                 }
-                                print"<TR><TD id='td_kolor' bgcolor=$kolor>$artykul_zamowienia</TD><TD id='td_kolor' align='right' bgcolor=$kolor>$ilosc</TD><TD id='td_kolor' align = 'center' bgcolor=$kolor>$status_metrow</TD><TD id='td_kolor' bgcolor=$kolor>$nr_parti</TD><TD id='td_kolor' bgcolor=$kolor><a href='WZORY_JPG_WSZYSTKIE/$wzor.jpg' data-lightbox='$wzor.jpg' data-title='$wzor'>$wzor</a></TD><TD id='td_kolor' bgcolor=$kolor>$uwagi</TD><TD id='td_kolor' bgcolor=$kolor>$status</TD>";	
+                                if($status == 'ZALICZKA')
+                                {
+                                    
+                                }
+                                    $tab_nr_wiersza_status[$k]=$nr_wiersza;
+                                    $tab_sprawdz_status[$k]=$status;
+                                    $ile_wierszy_status_zaliczka ++;
+                                print"<TR><TD id='td_kolor' bgcolor=$kolor>$artykul_zamowienia</TD><TD id='td_kolor' align='right' bgcolor=$kolor>$ilosc</TD><TD id='td_kolor' align = 'center' bgcolor=$kolor>$status_metrow</TD><TD id='td_kolor' bgcolor=$kolor>$nr_parti</TD><TD id='td_kolor' bgcolor=$kolor><a href='WZORY_JPG_WSZYSTKIE/$wzor.jpg' data-lightbox='$wzor.jpg' data-title='$wzor'>$wzor</a></TD><TD id='td_kolor' bgcolor=$kolor>$uwagi</TD>";
+                                    print"<TD id='td_kolor' bgcolor=$kolor>$status</TD>";	
                                     /////////////////pola do wpisywania daty alertow//////////////////////////	
                                 $polocz->open();
                                 mysql_select_db("ZAMOWIENIA_DRUKARNIA") or die ("nie ma zamowienia_drukarnia");
@@ -482,38 +505,43 @@ print'<TABLE border="0" style="width: 100%; height: 100%;">';
                                 $k++;	
                             print"</TR>";  
                             }
-                        print"</TABLE>";
-                    print"</td>";
-                print"</tr>";
-                /*
-                print"<tr>";
-                    print"<td align=center>"; 
-                        print"<TABLE>";
-                            print"<TR>";
-                                print"<TD height=10>";
-                                print"</TD>";
-                            print"</TR>";
-                        print"</TABLE>";
-                    print"</td>";
-                print"</tr>";
-                 * 
-                 */
-                print"<tr>";
-                    print"<td align=center>"; 
-                        print"<TABLE border=0 style='width: 100%; height: 100%;'>";
-                            print"<TR><TD width=10%></TD><TD width=2%></TD><TD width=5%></TD><TD width=5%></TD><TD width=15%></TD><TD width=43%></TD><TD width=10%></TD>";
-                                print"<TD  width=10%>";
+                        //print"</TABLE>";
+                        
+                    //print"</td>";
+                //print"</tr>";
+                //print"<tr>";
+                    //print"<td align=center>"; 
+                        //print"<TABLE border=1 style='width: 100%; height: 100%;'>";
+                            //print"<TR><TD width=2%></TD><TD width=2%></TD><TD width=5%></TD><TD width=5%></TD><TD width=2%></TD><TD width=3%></TD><TD width=10%></TD><TD width=2%></TD><TD width=10%></TD><TD width=2%></TD><TD width=10%></TD><TD width=2%></TD><TD width=2%></TD><TD width=2%></TD></TR>";
+                            print"<TR><TD width=2%></TD><TD width=2%></TD><TD width=5%></TD><TD width=5%></TD><TD width=2%></TD><TD width=3%></TD>";
+                            print"<TD width=10%>";
+                                print "<INPUT TYPE=hidden NAME=wielkosc_tab_status_zaliczka VALUE=$ile_wierszy_status_zaliczka>";
+                                for($i=0; $i<$ile_wierszy_status_zaliczka; $i++)
+                                {
+                                    print "<INPUT TYPE=hidden NAME=pobrany_nr_wiersza_status_zaliczka[$i] VALUE=$tab_nr_wiersza_status[$i]>";
+                                    print "<INPUT TYPE=hidden NAME=pobrany_status_zaliczka[$i] VALUE=$tab_sprawdz_status[$i]>";
+                                    
+                                }
+                                print'<br>';
+                                print'<INPUT TYPE="submit" NAME="zmien_status_zaliczka" VALUE="Zmień status" CLASS="btn">';
+                                print'<br>';
+                            print"</TD>";
+                            print"<TD width=2%></TD><TD width=10%></TD><TD width=2%></TD><TD width=10%></TD><TD width=2%></TD><TD width=2%></TD>";
+                            
+                            //print"<TR><TD width=10%></TD><TD width=2%></TD><TD width=5%></TD><TD width=5%></TD><TD width=15%></TD><TD width=43%></TD><TD width=10%></TD>";
+                                print"<TD  width=2%>";
                                     print "<INPUT TYPE=hidden NAME=wielkosc_tab VALUE=$w>";
                                     for($i=0; $i<$w; $i++)
                                     {
                                         print "<INPUT TYPE=hidden NAME=pobrany_nr_wiersza[$i] VALUE=$tab_nr_wiersza[$i]>";				
                                     }
+                                    print'<br>';
                                     print'<INPUT TYPE="submit" NAME="zapisz_uwagi" VALUE="Zapisz" CLASS="btn">';
                                     print'<br>';
                                 print"</TD>";                               
                             print"</TR>";	
                         print"</TABLE>";
-                        print'</FORM>';
+                        print'</FORM>';                      
                     print"</td>";
                 print"</tr>";
             print"</TABLE>";
@@ -608,6 +636,35 @@ function zapisywanie_uwag()
             }
             $polocz->close();
 	}	
+}
+function zmiana_statusu()
+{
+    $ilosc = $_POST['wielkosc_tab_status_zaliczka'];
+    
+    require_once 'class.Polocz.php';
+    $polocz = new Polocz();
+    
+    for($i=0; $i<=$ilosc; $i++)
+    {
+            $ID_nr_wiersza = $_POST['pobrany_nr_wiersza_status_zaliczka'][$i];
+            $status_zaliczka = $_POST['pobrany_status_zaliczka'][$i];
+            //print"<br>funkcja zmiana statusu";
+            if($status_zaliczka == 'ZALICZKA')
+            {
+                //print"<br>funkcja zmiana statusu";
+
+                //print_r($ID_nr_wiersza); print_r($status_zaliczka);
+                       
+                
+                $polocz->open();
+                mysql_select_db("ZAMOWIENIA_DRUKARNIA") or die ("nie ma zamowienia_drukarnia");
+                $query = "UPDATE ZAMOWIENIA_TAB SET Status_zamowienia = 'DO DRUKU' WHERE Nr_wiersza = '$ID_nr_wiersza';";
+                $wynik = mysql_query($query);
+                $polocz->close();  
+            }
+            
+                
+    }
 }
 
 
