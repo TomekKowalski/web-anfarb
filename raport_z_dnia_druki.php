@@ -27,49 +27,46 @@
 	<script src="//code.jquery.com/jquery-1.10.2.js"></script>
         <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
          <link rel="stylesheet" href="/resources/demos/style.css">
+             <!--
 	<script>	
 		$(function() {
 		$( "#datepicker" ).datepicker();
 		});
 	</script>
+             -->
 	
 </head>
 
 <body>
     
-    
-<?PHP
+<DIV class="do_tabeli" id="niedrukuj">
 
-
-
-
-print'<DIV class="do_tabeli" id="niedrukuj">';
-
-print"<TABLE  cellpadding = '0'  cellspacing = '0' border = '0' style='width: 100%; height: 100%;'>";   
-    print"<tr>";
-        print"<td align=center>";
-            require_once "zalogowany_banery.php";
-        print"</td>";
-    print"</tr>";
-    print"<tr>";
-        print"<td align=center>";
-            print'<DIV class="mniejszy_panel">';
-                            print'<FORM ACTION="index.php" METHOD=POST>';
-                            print'<INPUT TYPE="submit" VALUE="Strona startowa" CLASS="btn">';
-                            print'</FORM>';                                  
+<TABLE  cellpadding = '0'  cellspacing = '0' border = '0' style='width: 100%; height: 100%;'> 
+    <tr>
+        <td align=center>
+            <?PHP require_once "zalogowany_banery.php"; ?>
+        </td>
+    </tr>
+        <tr>
+            <td align=center>
+                <DIV class="mniejszy_panel">
+                            <FORM ACTION="index.php" METHOD=POST>
+                                <INPUT TYPE="submit" VALUE="Strona startowa" CLASS="btn">
+                            </FORM>                                  
                     
-                            ////////////koniec przycisk i nazwa odbiorcy////////////////
-                            print'<br>';
-                            /////////////przycisk data wybierz/////////////////////////
-                            print "<B><font class='opis_paneli'>Raport z dnia druki</font></B><br><br>";
+                             <!--////////////koniec przycisk i nazwa odbiorcy////////////////-->
+                            <br>
+                            <!--/////////////przycisk data wybierz/////////////////////////-->
+                            <B><font class='opis_paneli'>Raport z dnia druki</font></B><br><br>
 
-                            print'<FORM ACTION="raport_z_dnia_druki.php" METHOD=POST>';
-                            print '<INPUT TYPE="hidden" NAME="co" VALUE="opcja">';
+                            <FORM ACTION="raport_z_dnia_druki.php" METHOD=POST>
+                                <INPUT TYPE="hidden" NAME="co" VALUE="opcja">
 
-                                print'<div align=center>';
-                                    print"<TABLE CELLPADDING=0 CELLSPACING=0 BORDER=0 style='width: 70%;'>";
-                                        print"<TR>";
-                                            print"<TD class='td_pole_daty'>";  
+                                <div align=center>
+                                    <TABLE CELLPADDING=0 CELLSPACING=0 BORDER=0 style='width: 70%;'>
+                                        <TR>
+                                            <TD class='td_pole_daty'>
+                                                <?PHP
                                                 if($_POST['data_data'] == "")
                                                 {
                                                    $data_miesiac_p=date("m");
@@ -191,7 +188,7 @@ print"<div align=center>";
 
                                               
                                               //////////////zliczanie sztuk / metrow ////////////////////////////
-                                              if($odbiorca_zamowienia != "PAKAITA" && $odbiorca_zamowienia != "ROKIET" && $odbiorca_zamowienia != "PRÓBY DRUKU" && $odbiorca_zamowienia != "PRZYGOTOWANIE PRODUKCJI" && $uzytkownik != "TOMEK-DRUKARNIA" && $uzytkownik != "ASIA-DRUKARNIA" && $uzytkownik != "DRUK-Kasia" && $uzytkownik != "" && $artykul_zamowienia != 'DZIANINA PES/T')
+                                              if($odbiorca_zamowienia != "PAKAITA" && $odbiorca_zamowienia != "ROKIET" && $odbiorca_zamowienia != "PRÓBY DRUKU" && $odbiorca_zamowienia != "CANORRA" && $odbiorca_zamowienia != "MADRES" && $odbiorca_zamowienia != "ZZZ" && $odbiorca_zamowienia != "PRZYGOTOWANIE PRODUKCJI" && $uzytkownik != "TOMEK-DRUKARNIA" && $uzytkownik != "ASIA-DRUKARNIA" && $uzytkownik != "DRUK-Kasia" && $uzytkownik != "" && $artykul_zamowienia != 'DZIANINA PES/T')
                                               {
 
                                                 
