@@ -90,48 +90,13 @@
                             //$odbiorca = $_GET['odbiorca'];
                         }
                         if($_POST['przycisk_zmien_status'])
-                        {
-                            
-                            $data_przycisk_zapisu = $_POST['data_przycisk_zapisz'];
-                            //var_dump($data_przycisk_zapisu);
-                            /////////konvertowanie daty ///////////////////
-                            /*
-                            $data_miesiac = substr($data_przycisk_zapisu,0, 2);
-                            $data_dzien = substr($data_przycisk_zapisu,3, 2);
-                            $data_rok = substr($data_przycisk_zapisu,6, 5);
-                             * 
-                             */
-                            
-                            //print_r($data_przycisk_zapisu);
-
-                            //$data_razem = $data_rok."-".$data_miesiac."-".$data_dzien;
-                            
+                        {                            
+                            $data_przycisk_zapisu = $_POST['data_przycisk_zapisz'];                          
                             $data_razem = $data_przycisk_zapisu;
                             $data = $data_razem;
-                            
-                            //$ilosc = $_POST['wielkosc_tab'];
-                            //for($i=1; $i<$ilosc; $i++)
-                            //{
-                                //print"i0 = ";
-                                //var_dump($i);
-                                //print"<br>";
-                                
-                                //$zaznaczony_nr_wiersza = $_POST['pobrany_nr_wiersza'][$i];
+                                                          
                                 $check_nr_wiersza = $_POST['zmien_status'];
-                                //print"check nr wiersza  = ";
-                                //var_dump($check_nr_wiersza);
-                                //print"<br>";
-                                //$wybrany_status = $_POST['status'];  
-                                //if (isset($_POST['nr_wiersza'][$i]))
-                                //{  
-                                    //$check_nr_wiersza=$_POST['nr_wiersza'][$i];                                  
-                                    //if($zaznaczony_nr_wiersza == $check_nr_wiersza)
-                                    //{	
-                                        //print"i = ";
-                                        //var_dump($i);
-                                        //print"<br>wchodzi check <br>";
-                                        //var_dump($check_nr_wiersza);
-                                        
+                                                                     
                                         $polocz->open();
                                         mysql_select_db("ZAMOWIENIA_DRUKARNIA") or die ("nie ma zamowienia_drukarnia");
 
@@ -174,20 +139,8 @@
                                                 $wynik_status = mysql_query($query_status);
                                                 $polocz->close();
                                             }
-                                        }
-                                          
-                                         
-                                    //}
-                                //}
-                            //}
-                        }
-                        
-                         
-                         
-                         
-
-                        
-
+                                        }                                  
+                        }                      
                         if($odbiorca == "")
                         {
                             if($_POST['odbiorca_po_edycji'])
@@ -521,6 +474,10 @@
                                 if($status == 'DO AKCEPTACJI')
                                 {
                                         $kolor = '#ffe6e6';
+                                }
+                                if($status == 'ZALICZKA')
+                                {
+                                        $kolor = '#DCDCDC';
                                 }
                         print"<TR><TD id='td_kolor' bgcolor=$kolor>$artykul_zamowienia</TD><TD id='td_kolor' align='right' bgcolor=$kolor>$ilosc</TD><TD id='td_kolor' align = 'center' bgcolor=$kolor>$status_metrow</TD><TD id='td_kolor' bgcolor=$kolor>$nr_parti</TD><TD id='td_kolor' bgcolor=$kolor><a href='WZORY_JPG_WSZYSTKIE/$wzor_baza.jpg' data-lightbox='$wzor_baza.jpg' data-title='$wzor_baza'>$wzor_baza</a></TD><TD id='td_kolor' bgcolor=$kolor>$uwagi_baza</TD><TD id='td_kolor' bgcolor=$kolor>$status</TD>";
                             
