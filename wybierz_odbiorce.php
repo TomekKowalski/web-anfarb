@@ -361,8 +361,9 @@ print'<TABLE border="0" style="width: 100%; height: 100%;">';
                                 }
                                 if($status == 'ZALICZKA')
                                 {
-                                    
+                                        $kolor = '#DCDCDC';
                                 }
+                                
                                     $tab_nr_wiersza_status[$k]=$nr_wiersza;
                                     $tab_sprawdz_status[$k]=$status;
                                     $ile_wierszy_status_zaliczka ++;
