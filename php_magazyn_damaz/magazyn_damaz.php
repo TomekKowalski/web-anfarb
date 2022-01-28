@@ -15,8 +15,8 @@
 <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-2" />
-        <script src = "js/jquery-1.11.0.min.js"> </script>
-        <script src = "js/lightbox.min.js"> </script>
+        <script src = "../js/jquery-1.11.0.min.js"> </script>
+        <script src = "../js/lightbox.min.js"> </script>
         <link href="../css/lightbox.css" rel="stylesheet"/>
         <link href="../css_wyglad_strony/style.css" rel="stylesheet" type="text/css">
         <link href="../css_wyglad_strony/mobile_style.css" rel="stylesheet" type="text/css">
@@ -27,11 +27,6 @@
         <script src="//code.jquery.com/jquery-1.10.2.js"></script>
        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
        <link rel="stylesheet" href="/resources/demos/style.css">
-  <script>
-  $(function() {
-    $( "#datepicker" ).datepicker();
-  });
-  </script>
         
 </head>
 
@@ -72,13 +67,15 @@ print"<TABLE cellpadding = '0'  cellspacing = '0' border = '0' style='width: 100
                                             $data_miesiac_p=date("m");
                                             $data_dzien_p=date("d");
                                             $data_rok_p=date("Y");
-                                            $data = $data_miesiac_p."/".$data_dzien_p."/".$data_rok_p;	
+                                            $data = $data_rok_p."-".$data_miesiac_p."-".$data_dzien_p;
+                                            //$data = $data_miesiac_p."/".$data_dzien_p."/".$data_rok_p;	
                                         }
                                         else
                                         {
                                             $data = $_POST['data_data'];
                                         }
-                                        print"<input class='text_box' type=\"text\" id=\"datepicker\" name=\"data_data\" value=\"$data\" style='width: 90%;'>"; 
+                                        //print"<input class='text_box' type=\"text\" id=\"datepicker\" name=\"data_data\" value=\"$data\" style='width: 90%;'>"; 
+                                        print"<input class='text_box' type='date' name='data_data' value='".$data."'>";
                                     print"</TD>";                          
                                     print"<TD style='width: 20%;'>";  
                                         print'<INPUT TYPE="submit" VALUE="Wybierz" CLASS="btn">'; 
@@ -93,6 +90,9 @@ print"<TABLE cellpadding = '0'  cellspacing = '0' border = '0' style='width: 100
     print"</tr>";
 print'</TEBLE>';
 print"</DIV>";
+
+require_once "./magazyn_damaz_tabela.php";
+/*
 print'<DIV>';
 print"<TABLE cellpadding = '0'  cellspacing = '0' border = '0' style='width: 100%; height: 100%;'>";
     print"<tr>";
@@ -102,11 +102,12 @@ print"<TABLE cellpadding = '0'  cellspacing = '0' border = '0' style='width: 100
             {
                 ////////////////wyszukiwanie z danego dnia /////////////////////////////
                 $data=$_POST['data_data'];
-                $data_miesiac = substr($data,0, 2);
-                $data_dzien = substr($data,3, 2);
-                $data_rok = substr($data,6, 5);
+                $data_miesiac = substr($data,5, 2);
+                $data_dzien = substr($data,8, 2);
+                $data_rok = substr($data,0, 4);
                 $data_razem = $data_miesiac."/".$data_dzien."/".$data_rok;
-                $data_wyswietl = $data_rok."-".$data_miesiac."-".$data_dzien;
+                              
+                $data_wyswietl = $data;
                 print"<B><font size=3 color=#00004d>$data_wyswietl</font></B><br/>";
                 $polocz->open();
                 $wynik = mysql_query("SELECT * FROM ZAMOWIENIA_TAB, MAGAZYN_DAMAZ_TAB WHERE MAGAZYN_DAMAZ_TAB.Data_magazynowania LIKE '$data_razem' AND ZAMOWIENIA_TAB.Nr_wiersza = MAGAZYN_DAMAZ_TAB.Nr_wiersza ORDER BY Odbiorca_zamowienia;") or die ("zle pytanie");
@@ -156,7 +157,7 @@ print"<TABLE cellpadding = '0'  cellspacing = '0' border = '0' style='width: 100
                                 $kolor = '#CCFFCC';
                             }
   
-                    print"<TR><TD id='td_kolor' bgcolor=$kolor>$artykul_zamowienia</TD><TD id='td_kolor' align='right' bgcolor=$kolor>$ilosc</TD><TD id='td_kolor' align = 'center' bgcolor=$kolor>$status_metrow</TD><TD id='td_kolor' bgcolor=$kolor>$nr_parti</TD><TD id='td_kolor' bgcolor=$kolor><a href='WZORY_JPG_WSZYSTKIE/$wzor.jpg' data-lightbox='$wzor.jpg' data-title='$wzor'>$wzor</a></TD><TD id='td_kolor' bgcolor=$kolor>$uwagi</TD><TD id='td_kolor' bgcolor=$kolor>$status</TD><TD id='td_kolor' align=center bgcolor=$kolor>$planowana_data_odbioru</TD></TR>";
+                    print"<TR><TD id='td_kolor' bgcolor=$kolor>$artykul_zamowienia</TD><TD id='td_kolor' align='right' bgcolor=$kolor>$ilosc</TD><TD id='td_kolor' align = 'center' bgcolor=$kolor>$status_metrow</TD><TD id='td_kolor' bgcolor=$kolor>$nr_parti</TD><TD id='td_kolor' bgcolor=$kolor><a href='../WZORY_JPG_WSZYSTKIE/$wzor.jpg' data-lightbox='$wzor.jpg' data-title='$wzor'>$wzor</a></TD><TD id='td_kolor' bgcolor=$kolor>$uwagi</TD><TD id='td_kolor' bgcolor=$kolor>$status</TD><TD id='td_kolor' align=center bgcolor=$kolor>$planowana_data_odbioru</TD></TR>";
                         }
                 print"</TABLE>";
             }
@@ -168,6 +169,8 @@ print"<TABLE cellpadding = '0'  cellspacing = '0' border = '0' style='width: 100
     print"</tr>";
 print"</TABLE>";
 print"</div>";
+ * 
+ */
 
 
 

@@ -113,16 +113,7 @@ print"<div align=center>";
                             {
 
                                     ////////////////wyszukiwanie z danego dnia /////////////////////////////
-                                    $data_razem=$_POST['data_data'];
-
-                                    /*
-                                    $data_miesiac = substr($data,0, 2);
-                                    $data_dzien = substr($data,3, 2);
-                                    $data_rok = substr($data,6, 5);
-
-                                    $data_razem = $data_rok."-".$data_miesiac."-".$data_dzien; 
-                                     * 
-                                     */                                 
+                                    $data_razem=$_POST['data_data'];                                                                 
                                     print"<br/><B><font size=3 color=#00004d>$data_razem</font></B><br/>"; 
                                     $polocz->open(); 
                                     mysql_select_db("ZAMOWIENIA_DRUKARNIA") or die ("nie ma zamowienia_drukarnia");
@@ -236,6 +227,7 @@ print"<div align=center>";
                 print"</tr>";
             print"</TABLE>";
 print"</DIV>";
+
 print"<br><br><br><br><br><br><br><br><br><br><br><br><br>";
 print '<DIV id="panel_dolny_ilosc_do_druku" class="dolny_do_tabeli">';
                             print '<DIV class="mniejszy_panel">';
