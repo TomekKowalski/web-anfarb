@@ -57,6 +57,7 @@ print"<TABLE cellpadding = '0'  cellspacing = '0' border = '0' style='width: 100
 
                     ////////////pod tym wstaw tabele////////////////////////////////////
                         print'<FORM ACTION="magazyn_damaz.php" METHOD=POST>';
+                        //print'<FORM ACTION="magazyn_damaz_tabela.php" METHOD=POST>';
                         print '<INPUT TYPE="hidden" NAME="co" VALUE="opcja">';
                         print'<div align=center>';
                             print"<TABLE CELLPADDING=0 CELLSPACING=0 BORDER=0 style='width: 70%;'>";
@@ -91,7 +92,7 @@ print"<TABLE cellpadding = '0'  cellspacing = '0' border = '0' style='width: 100
 print'</TEBLE>';
 print"</DIV>";
 
-require_once "./magazyn_damaz_tabela.php";
+require_once "magazyn_damaz_tabela.php";
 /*
 print'<DIV>';
 print"<TABLE cellpadding = '0'  cellspacing = '0' border = '0' style='width: 100%; height: 100%;'>";
