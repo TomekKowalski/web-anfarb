@@ -17,9 +17,9 @@
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-2" />
         <script src = "js/jquery-1.11.0.min.js"> </script>
         <script src = "js/lightbox.min.js"> </script>
-        <link href="css/lightbox.css" rel="stylesheet"/>
-        <link href="css_wyglad_strony/style.css" rel="stylesheet" type="text/css">
-        <link href="css_wyglad_strony/mobile_style.css" rel="stylesheet" type="text/css">
+        <link href="../css/lightbox.css" rel="stylesheet"/>
+        <link href="../css_wyglad_strony/style.css" rel="stylesheet" type="text/css">
+        <link href="../css_wyglad_strony/mobile_style.css" rel="stylesheet" type="text/css">
             <link rel="Stylesheet" media="print" type="text/css" href="dodruku.css" />
         <title>Zamówienia drukarnia</title>
 
@@ -43,18 +43,18 @@ print'<DIV class="panel_glowny">';
 print"<TABLE cellpadding = '0'  cellspacing = '0' border = '0' style='width: 100%; height: 100%;'>";
     print"<tr>";
         print"<td align=center>";
-            require_once "zalogowany_banery.php";
+            require_once "../zalogowany_banery.php";
         print"</td>";
     print"</tr>";
     print"<tr>";
         print"<td align=center>"; 
             print'<DIV class="mniejszy_panel">';
-                require_once 'class.Polocz.php';
+                require_once '../class.Polocz.php';
                 $polocz = new Polocz();
                 $polocz->open();
                 mysql_select_db("ZAMOWIENIA_DRUKARNIA") or die ("nie ma zamowienia_drukarnia");
                 $polocz->close();                     
-                print'<FORM ACTION="index.php" METHOD=POST>';
+                print'<FORM ACTION="../index.php" METHOD=POST>';
                 print'<INPUT TYPE="submit" VALUE="Strona strartowa" CLASS="btn">';
                 print'</FORM>';                                    
                 print "<br><B><font class='opis_paneli'>Data przyjęcia<br> do magazynu DAMAZ</font></B><br><br>";
