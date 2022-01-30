@@ -52,7 +52,7 @@ window.onload = function()
             }
             if(panel_filtrowanie)
             {
-                if(yScrollAxis > 300)
+                if(yScrollAxis02 > 300)
                 {
                     panel_filtrowanie.setAttribute("class", "wiekszy_panel_fixed");
                 }            

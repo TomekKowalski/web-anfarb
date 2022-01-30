@@ -17,7 +17,7 @@
       <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-2" />
       <script src = "js/jquery-1.11.0.min.js"> </script>
       <script src = "js/lightbox.min.js"> </script>
-      <script src="js_web/script.js" async></script>
+      <script src="js_web/script_miniatura_zdjecia.js" async></script>
       <link href="css/lightbox.css" rel="stylesheet"/>
       <link href="css_wyglad_strony/style.css" rel="stylesheet" type="text/css">
       <link rel="Stylesheet" media="print" type="text/css" href="dodruku.css" />
@@ -212,7 +212,7 @@ print"</DIV>";
                             }else{
                                $od_ktorego_wiersza = 0;
                             }
- 
+                            $ktory_wiersz = 0;
                             while($rekord = mysql_fetch_assoc($wynik))
                             {
                                 $artykul_zamowienia = $rekord['Artykul_zamowienia'];
@@ -247,8 +247,9 @@ print"</DIV>";
                                 {
                                     $kolor = '#99FF99';   
                                 }
-                                print"<TR><TD id='td_kolor' bgcolor=$kolor>$artykul_zamowienia</TD><TD id='td_kolor' align='right' bgcolor=$kolor>$ilosc</TD><TD id='td_kolor' align = 'center' bgcolor=$kolor>$status_metrow</TD><TD id='td_kolor' bgcolor=$kolor>$nr_parti</TD><TD id='td_kolor' bgcolor=$kolor><a href='WZORY_JPG_WSZYSTKIE/$wzor.jpg' data-lightbox='$wzor.jpg' data-title='$wzor'>$wzor</a></TD><TD id='td_kolor' bgcolor=$kolor>$uwagi</TD>";	
+                                print"<TR><TD id='td_kolor' bgcolor=$kolor>$artykul_zamowienia</TD><TD id='td_kolor' align='right' bgcolor=$kolor>$ilosc</TD><TD id='td_kolor' align = 'center' bgcolor=$kolor>$status_metrow</TD><TD id='td_kolor' bgcolor=$kolor>$nr_parti</TD><TD id='td_kolor' bgcolor=$kolor><a href='WZORY_JPG_WSZYSTKIE/$wzor.jpg' data-lightbox='$wzor.jpg' data-title='$wzor'><div id='td_wzor".$ktory_wiersz."' class=''>$wzor</div></a></TD><TD id='td_kolor' bgcolor=$kolor>$uwagi</TD>";	
                                 print"</TR>";  
+                                $ktory_wiersz ++;
                             }
                         print"</TABLE>";
                     print"</div>";
@@ -258,5 +259,6 @@ print"</DIV>";
 
 //print"<div id='testHmajak'>Test: <br></div>";
 ?>
+    <figure id="miniatura_zdjecia"></figure>    
 </body>
 </html>

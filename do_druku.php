@@ -16,7 +16,6 @@
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-2" />
         <script src = "js/jquery-1.11.0.min.js"> </script>
         <script src = "js/lightbox.min.js"> </script>
-        <!--<script src="js_web/script_ilosc_do_druku.js" async></script>-->
         <script src="js_web/script_miniatura_zdjecia.js" async></script>
         <link href="css/lightbox.css" rel="stylesheet"/>
 	<link rel="Stylesheet" media="print" type="text/css" href="dodruku.css" />
