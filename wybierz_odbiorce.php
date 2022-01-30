@@ -17,7 +17,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-2" />
     <script src = "js/jquery-1.11.0.min.js"> </script>
     <script src = "js/lightbox.min.js"> </script>
-    <script src="js_web/script_wybierz_odbiorce.js" async></script>
+    <!--<script src="js_web/script_wybierz_odbiorce.js" async></script>-->
+    <script src="js_web/script_miniatura_zdjecia.js" async></script>
     <link href="css/lightbox.css" rel="stylesheet"/>
     <link rel="Stylesheet" media="print" type="text/css" href="dodruku.css" />
     <link href="css_wyglad_strony/style.css" rel="stylesheet" type="text/css">
@@ -317,6 +318,7 @@ print'<TABLE border="0" style="width: 100%; height: 100%;">';
                             }else{
                                 $od_ktorego_wiersza = 0;
                             }
+                            $ktory_wiersz = 0;
                             while($rekord = mysql_fetch_assoc($wynik))
                             {
                                 $artykul_zamowienia = $rekord['Artykul_zamowienia'];
@@ -367,8 +369,10 @@ print'<TABLE border="0" style="width: 100%; height: 100%;">';
                                     $tab_nr_wiersza_status[$k]=$nr_wiersza;
                                     $tab_sprawdz_status[$k]=$status;
                                     $ile_wierszy_status_zaliczka ++;
-                                print"<TR><TD id='td_kolor' bgcolor=$kolor>$artykul_zamowienia</TD><TD id='td_kolor' align='right' bgcolor=$kolor>$ilosc</TD><TD id='td_kolor' align = 'center' bgcolor=$kolor>$status_metrow</TD><TD id='td_kolor' bgcolor=$kolor>$nr_parti</TD><TD id='td_kolor' bgcolor=$kolor><a href='WZORY_JPG_WSZYSTKIE/$wzor.jpg' data-lightbox='$wzor.jpg' data-title='$wzor'>$wzor</a></TD><TD id='td_kolor' bgcolor=$kolor>$uwagi</TD>";
-                                    print"<TD id='td_kolor' bgcolor=$kolor>$status</TD>";	
+                                print"<TR><TD id='td_kolor' bgcolor=$kolor>$artykul_zamowienia</TD><TD id='td_kolor' align='right' bgcolor=$kolor>$ilosc</TD><TD id='td_kolor' align = 'center' bgcolor=$kolor>$status_metrow</TD><TD id='td_kolor' bgcolor=$kolor>$nr_parti</TD><TD id='td_kolor' bgcolor=$kolor><a href='WZORY_JPG_WSZYSTKIE/$wzor.jpg' data-lightbox='$wzor.jpg' data-title='$wzor'><div id='td_wzor".$ktory_wiersz."' class=''>$wzor</div></a></TD><TD id='td_kolor' bgcolor=$kolor>$uwagi</TD>";
+                                    print"<TD id='td_kolor' bgcolor=$kolor>$status</TD>";
+                                    
+                                    $ktory_wiersz ++;
                                     /////////////////pola do wpisywania daty alertow//////////////////////////	
                                 $polocz->open();
                                 mysql_select_db("ZAMOWIENIA_DRUKARNIA") or die ("nie ma zamowienia_drukarnia");
@@ -670,5 +674,6 @@ function zmiana_statusu()
 
 
 ?>
+    <figure id="miniatura_zdjecia"></figure>
 </body>
 </html>
