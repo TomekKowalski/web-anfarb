@@ -21,6 +21,7 @@
 
         <script src = "js/jquery-1.11.0.min.js"> </script>
         <script src = "js/lightbox.min.js"> </script>
+        <script src="js_web/script_miniatura_zdjecia.js" async></script>
         <link href="css/lightbox.css" rel="stylesheet"/>   
         <link href="css_wyglad_strony/style.css" rel="stylesheet" type="text/css">
         <link href="css_wyglad_strony/mobile_style.css" rel="stylesheet" type="text/css">
@@ -29,11 +30,7 @@
         <script src="//code.jquery.com/jquery-1.10.2.js"></script>
         <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
         <link rel="stylesheet" href="/resources/demos/style.css">
-	<script>	
-		$(function() {
-		$( "#datepicker" ).datepicker();
-		});
-	</script>
+	
 	  
 </head>
 
@@ -439,6 +436,7 @@
 
                     $polocz->close();
                     $k = 1;
+                    $ktory_wiersz = 0;
                     while($rekord = mysql_fetch_assoc($wynik))
                     {
     
@@ -479,8 +477,8 @@
                                 {
                                         $kolor = '#DCDCDC';
                                 }
-                        print"<TR><TD id='td_kolor' bgcolor=$kolor>$artykul_zamowienia</TD><TD id='td_kolor' align='right' bgcolor=$kolor>$ilosc</TD><TD id='td_kolor' align = 'center' bgcolor=$kolor>$status_metrow</TD><TD id='td_kolor' bgcolor=$kolor>$nr_parti</TD><TD id='td_kolor' bgcolor=$kolor><a href='WZORY_JPG_WSZYSTKIE/$wzor_baza.jpg' data-lightbox='$wzor_baza.jpg' data-title='$wzor_baza'>$wzor_baza</a></TD><TD id='td_kolor' bgcolor=$kolor>$uwagi_baza</TD><TD id='td_kolor' bgcolor=$kolor>$status</TD>";
-                            
+                        print"<TR><TD id='td_kolor' bgcolor=$kolor>$artykul_zamowienia</TD><TD id='td_kolor' align='right' bgcolor=$kolor>$ilosc</TD><TD id='td_kolor' align = 'center' bgcolor=$kolor>$status_metrow</TD><TD id='td_kolor' bgcolor=$kolor>$nr_parti</TD><TD id='td_kolor' bgcolor=$kolor><a href='WZORY_JPG_WSZYSTKIE/$wzor_baza.jpg' data-lightbox='$wzor_baza.jpg' data-title='$wzor_baza'><div id='td_wzor".$ktory_wiersz."' class=''>$wzor_baza</div></a></TD><TD id='td_kolor' bgcolor=$kolor>$uwagi_baza</TD><TD id='td_kolor' bgcolor=$kolor>$status</TD>";
+                                $ktory_wiersz ++;
 
                             //print"<TD border='0'></TD>";  
                             
@@ -855,5 +853,7 @@ function combobox_wzory($wzor_wyswietl)
 
 
 ?>
+            
+    <figure id="miniatura_zdjecia"></figure>
 </body>
 </html>

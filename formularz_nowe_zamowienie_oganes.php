@@ -17,6 +17,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset="iso-8859-2" />
         <script src = "js/jquery-1.11.0.min.js"> </script>
         <script src = "js/lightbox.min.js"> </script>
+        <script src="js_web/script_miniatura_zdjecia.js" async></script>
         <link href="css/lightbox.css" rel="stylesheet"/>
         <link href="css_wyglad_strony/style.css" rel="stylesheet" type="text/css">
         <title>Zamowienia drukarnia</title>
@@ -234,6 +235,7 @@ print"<TABLE cellpadding = '0'  cellspacing = '0' border = '0' style='width: 100
                         $wynik = mysql_query("SELECT * FROM ZAMOWIENIA_TAB WHERE Odbiorca_zamowienia = '$odbiorca' AND Data = '$data' AND Zamowienie_nr = '$zamowienie_nr'") or die ("zle pytanie");
 
                     $polocz->close();
+                    $ktory_wiersz = 0;
                     while($rekord = mysql_fetch_assoc($wynik))
                     {
     
@@ -269,7 +271,8 @@ print"<TABLE cellpadding = '0'  cellspacing = '0' border = '0' style='width: 100
                                 {
                                         $kolor = '#ffe6e6';
                                 }
-                        print"<TR><TD id='td_kolor' bgcolor=$kolor>$artykul_zamowienia</TD><TD id='td_kolor' align='right' bgcolor=$kolor>$ilosc</TD><TD id='td_kolor' align = 'center' bgcolor=$kolor>$status_metrow</TD><TD id='td_kolor' bgcolor=$kolor>$nr_parti</TD><TD id='td_kolor' bgcolor=$kolor><a href='WZORY_JPG_WSZYSTKIE/$wzor_baza.jpg' data-lightbox='$wzor_baza.jpg' data-title='$wzor_baza'>$wzor_baza</a></TD><TD id='td_kolor' bgcolor=$kolor>$uwagi_baza</TD><TD id='td_kolor' bgcolor=$kolor>$status</TD>";                          
+                        print"<TR><TD id='td_kolor' bgcolor=$kolor>$artykul_zamowienia</TD><TD id='td_kolor' align='right' bgcolor=$kolor>$ilosc</TD><TD id='td_kolor' align = 'center' bgcolor=$kolor>$status_metrow</TD><TD id='td_kolor' bgcolor=$kolor>$nr_parti</TD><TD id='td_kolor' bgcolor=$kolor><a href='WZORY_JPG_WSZYSTKIE/$wzor_baza.jpg' data-lightbox='$wzor_baza.jpg' data-title='$wzor_baza'><div id='td_wzor".$ktory_wiersz."' class=''>$wzor_baza</div></a></TD><TD id='td_kolor' bgcolor=$kolor>$uwagi_baza</TD><TD id='td_kolor' bgcolor=$kolor>$status</TD>";                          
+                                $ktory_wiersz ++;
                             print"<TD id='td_kolor' bgcolor=$kolor align=center>";
                             
                                 if($nr_parti == "")/// PRZYCISK EDYCJA/////////////////
@@ -593,5 +596,6 @@ function combobox_wzory($wzor_wyswietl)
 
 
 ?>
+    <figure id="miniatura_zdjecia"></figure>
 </body>
 </html>
