@@ -607,12 +607,12 @@ print'<TABLE border="0" style="width: 100%; height: 100%;">';
     print"<tr>";
         print"<td align=center>";       
                 //////////////////kontener przyciski statystyki////////////////////////////////////////////               
-            /*
+            
             print'<div class="panel_1ogowanie">';
                 require_once "./wybierz_odbiorce.kontener_statystyki.php";
             print'</div>';
-             * 
-             */
+             
+             
     } 
         print"</td>";
     print"</tr>"; 

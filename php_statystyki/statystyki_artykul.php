@@ -17,6 +17,7 @@
         <meta charset="ISO-8859-1">
         <script src = "../js/jquery-1.11.0.min.js"> </script>
         <script src = "../js/lightbox.min.js"> </script>
+        <script src="../js_web/script_miniatura_zdjecia.js" async></script>
         <link href="../css/lightbox.css" rel="stylesheet"/>     
 	<link rel="Stylesheet" media="print" type="text/css" href="dodruku.css" />
         <link href="../css_wyglad_strony/style.css" rel="stylesheet" type="text/css">
@@ -43,7 +44,7 @@
         <tr>
             <td align=center>
                 <!--<DIV class="mniejszy_panel">-->
-                <DIV class="wiekszy_panel">
+                <DIV id="panel_filtrowanie" class="wiekszy_panel">
                     
                             <FORM ACTION="../index.php" METHOD=POST>
                                 <INPUT TYPE="submit" VALUE="Strona startowa" CLASS="btn">
@@ -104,14 +105,59 @@
     </tr> 
 </TABLE>
 </DIV>
-<?PHP
-print"<div align=center>";          
-            print"<TABLE cellpadding = '0'  cellspacing = '0' border = '0' style='width: 98%; height: 100%;'>";               
-                print"<tr>";
-                    print"<td align=center>";
-  
-                                ///////////////////koniec przycisk data wybierz///////////////////
-                            require_once 'class.Polocz.php';
+
+<div align=center>   
+            <?PHP print"<br/><B><font size=3 color=#00004d>Artykuły od: $data_od do: $data_do</font></B><br/><br>"; ?>
+             
+            
+            <TABLE cellpadding = '0'  cellspacing = '0' border = '0' style='width: 98%; height: 100%;'>               
+                <tr>
+                    <td align="center">
+                        <DIV class="centrowanie">
+                            <TABLE width=80%>
+                                <TR bgcolor = #6666ff><TD id='td_kolor' class='regaly_td_font' style='width: 60%;'><B>ARTYKUŁ</B></TD><TD id='td_kolor' class='regaly_td_font' style='width: 25%;'><B>METRY</B></TD><TD id='td_kolor' class='regaly_td_font' style='width: 15%;'><B> % </B></TD></TR>
+                                    <?PHP
+                                        require_once '../class.Polocz.php';
+                                        $polocz = new Polocz();
+                                        
+                                        $polocz->open(); 
+                                        mysql_select_db("ZAMOWIENIA_DRUKARNIA") or die ("nie ma zamowienia_drukarnia");                                  
+                                        $wynik_suma = mysql_query("SELECT sum(METRY_RAPORTY_ZMIANA) AS 'metry_suma' FROM view_wszystko_metry_raporty_sztuki WHERE Artykul_zamowienia != '' AND Artykul_zamowienia != 'Zamówienie nr..' AND Artykul_zamowienia != 'ZZZZ' AND Artykul_zamowienia != 'test 2020' AND Artykul_zamowienia != 'wwwww' AND Artykul_zamowienia != 'DZIANINA PES/T' AND Artykul_zamowienia NOT LIKE 'TKANINA%' AND Artykul_zamowienia != '200 BAWEŁNA' AND Artykul_zamowienia NOT LIKE '%VISKOZA' AND Data BETWEEN '$data_od' AND '$data_do';") or die ("zle pytanie zamowienia sumy");                                                                                              
+                                        $polocz->close();
+                                        
+                                        while($rekord_suma = mysql_fetch_assoc($wynik_suma)){
+                                            $suma_metrow = $rekord_suma['metry_suma'];
+                                        }
+                                        
+                                        $polocz->open(); 
+                                        mysql_select_db("ZAMOWIENIA_DRUKARNIA") or die ("nie ma zamowienia_drukarnia");                                  
+                                        $wynik = mysql_query("SELECT Artykul_zamowienia AS 'Artykuł', sum(METRY_RAPORTY_ZMIANA) AS 'Ilość_metrów' FROM view_wszystko_metry_raporty_sztuki WHERE Artykul_zamowienia != '' AND Artykul_zamowienia != 'Zamówienie nr..' AND Artykul_zamowienia != 'ZZZZ' AND Artykul_zamowienia != 'test 2020' AND Artykul_zamowienia != 'wwwww' AND Artykul_zamowienia != 'DZIANINA PES/T' AND Artykul_zamowienia NOT LIKE 'TKANINA%' AND Artykul_zamowienia != '200 BAWEŁNA' AND Artykul_zamowienia NOT LIKE '%VISKOZA' AND Data BETWEEN '$data_od' AND '$data_do' GROUP BY Artykul_zamowienia ORDER BY sum(METRY_RAPORTY_ZMIANA) DESC;") or die ("zle pytanie zamowienia");                                                                                              
+                                        $polocz->close();
+                                        
+                                        while($rekord = mysql_fetch_assoc($wynik)){
+                                            
+                                            $artykul = $rekord['Artykuł'];
+                                            $metry = $rekord['Ilość_metrów'];
+                                            
+                                            $procent = (100 * $metry)/$suma_metrow;
+                                            $procent = round($procent, 2);
+                                            
+                                            $kolor = '#FFFFFF';
+                                            
+                                            print"<TR><TD id='td_kolor' bgcolor=$kolor>$artykul</TD><TD id='td_kolor' align='right' bgcolor=$kolor>$metry</TD><TD id='td_kolor' align = 'center' bgcolor=$kolor>$procent %</TD></TR>\n";
+                                        
+                                            
+                                        }
+                                    
+                                    
+                                    ?>
+                            </TABLE>
+                        </DIV>
+            
+                    <?PHP
+                         /*
+                        ///////////////////koniec przycisk data wybierz///////////////////
+                            require_once '../class.Polocz.php';
                             $polocz = new Polocz();
 
                                 /////////wyswietlanie po wybraniu/////////////
@@ -122,34 +168,14 @@ print"<div align=center>";
                                     ////////////////wyszukiwanie z danego dnia /////////////////////////////
                                     $data_razem=$_POST['data_data'];
 
-                                    /*
-                                    $data_miesiac = substr($data,0, 2);
-                                    $data_dzien = substr($data,3, 2);
-                                    $data_rok = substr($data,6, 5);
-
-                                    $data_razem = $data_rok."-".$data_miesiac."-".$data_dzien; 
-                                     * 
-                                     */                                 
-                                    print"<br/><B><font size=3 color=#00004d>Raport z dnia $data_razem druki</font></B><br/><br>"; 
+                                                                  
+                                     
                                     $polocz->open(); 
                                     mysql_select_db("ZAMOWIENIA_DRUKARNIA") or die ("nie ma zamowienia_drukarnia");
-                                    //$wynik = mysql_query("SELECT * FROM ZAMOWIENIA_TAB WHERE Data LIKE '$data_razem' AND Nr_parti NOT LIKE '%usuniete%' ORDER BY Odbiorca_zamowienia;") or die ("zle pytanie");
                                     
-                                    //$wynik = mysql_query("SELECT Z.Odbiorca_zamowienia, Z.Artykul_zamowienia, Z.Ilosc_szt_metrow, Z.Status_metrow, Z.Nr_parti, Z.Wzory_zamowienia, Z.Uwagi, Z.Status_zamowienia, Z.Zamowienie_nr, Z.Data FROM ZAMOWIENIA_TAB Z WHERE Z.Data LIKE '$data_razem' AND Z.Nr_parti NOT LIKE '%usuniete%' ORDER BY Z.Odbiorca_zamowienia;") or die ("zle pytanie zamowienia");
-                                    //$wynik = mysql_query("SELECT Z.Odbiorca_zamowienia, Z.Artykul_zamowienia, Z.Ilosc_szt_metrow, Z.Status_metrow, Z.Data FROM ZAMOWIENIA_TAB Z WHERE Z.Data LIKE '$data_razem' AND Z.Nr_parti NOT LIKE '%usuniete%' ORDER BY Z.Odbiorca_zamowienia;") or die ("zle pytanie zamowienia");
-                                    
-                                    if($data_razem < "2021-10-31")
-                                    {
-                                       $wynik = mysql_query("SELECT Z.Odbiorca_zamowienia, Z.Artykul_zamowienia, Z.Ilosc_szt_metrow, Z.Status_metrow, Z.Data, K.uzytkownik FROM (ZAMOWIENIA_TAB Z LEFT JOIN view_kto_wpisal_zamowienie K ON Z.Nr_wiersza = K.id_wiersza_zamowienia) WHERE Z.Data LIKE '$data_razem' AND Z.Nr_parti NOT LIKE '%usuniete%' ORDER BY K.uzytkownik;") or die ("zle pytanie zamowienia");                        
-                                    }
-                                    else 
-                                    {
-                                        //$wynik = mysql_query("SELECT Z.Odbiorca_zamowienia, Z.Artykul_zamowienia, Z.Ilosc_szt_metrow, Z.Status_metrow, Z.Data, Z.Kto_wpisal FROM ZAMOWIENIA_TAB Z WHERE Z.Data LIKE '$data_razem' AND Z.Nr_parti NOT LIKE '%usuniete%' ORDER BY Z.Kto_wpisal, Z.Odbiorca_zamowienia;") or die ("zle pytanie zamowienia");                        
-                                        $wynik = mysql_query("SELECT Z.Odbiorca_zamowienia, Z.Artykul_zamowienia, Z.Ilosc_szt_metrow, Z.Status_metrow, Z.Data, Z.Kto_wpisal FROM ZAMOWIENIA_TAB Z WHERE Z.Data LIKE '$data_razem' AND Z.Nr_parti NOT LIKE '%usuniete%' AND Z.Artykul_zamowienia NOT LIKE '%BT2424%' ORDER BY Z.Kto_wpisal, Z.Odbiorca_zamowienia;") or die ("zle pytanie zamowienia");                        
+                                    $wynik = mysql_query("SELECT Z.Odbiorca_zamowienia, Z.Artykul_zamowienia, Z.Ilosc_szt_metrow, Z.Status_metrow, Z.Data, Z.Kto_wpisal FROM ZAMOWIENIA_TAB Z WHERE Z.Data LIKE '$data_razem' AND Z.Nr_parti NOT LIKE '%usuniete%' AND Z.Artykul_zamowienia NOT LIKE '%BT2424%' ORDER BY Z.Kto_wpisal, Z.Odbiorca_zamowienia;") or die ("zle pytanie zamowienia");                        
                                   
-                                        //print"data powyzej";
-                                    }
-                                    
+                                        
                                     $polocz->close();
                                 print"<DIV ALIGN=center>";
 
@@ -243,8 +269,7 @@ print"<div align=center>";
                                                     else{
                                                         $uzytkownik_do_wyswietlenia = $uzytkownik;
                                                     }
-                                                    //$kolor = '#CC0033';
-                                                    $kolor = '#99CCCC';
+                                                     $kolor = '#99CCCC';
                                                     //print"<TR><TD id='td_kolor' bgcolor=$kolor><B><font size='4' color='blue'>$uzytkownik</font></B></TD><TD id='td_kolor' bgcolor=$kolor>$uzytkownik</TD><TD id='td_kolor' bgcolor=$kolor></TD></TR>\n";
                                                     print"<TR><TD id='td_kolor' style='background-color:$kolor; text-align: right;'><B><font style= 'font-size:22px; color:#003366;'>$uzytkownik_do_wyswietlenia</font></B></TD><TD id='td_kolor' style='background-color:$kolor;'></TD><TD id='td_kolor' style='background-color:$kolor;'></TD></TR>\n";
                                                     
@@ -255,13 +280,11 @@ print"<div align=center>";
                                                 {
                                                   $ilosc_sztuk += $ilosc; 
                                                   $temp_ilosc_sztuk_uzytkownik += $ilosc;
-                                                  //print_r($temp_ilosc_sztuk_uzytkownik); print"<br>";
-                                                }
+                                                   }
                                                 if(($status_metrow == "raport(y)") || ($status_metrow == "metr(y)"))
                                                 {
                                                   $ilosc_metrow += $ilosc;
                                                   $temp_ilosc_metrow_uzytkownik += $ilosc;
-                                                  //print_r($temp_ilosc_metrow_uzytkownik); print"<br>";
                                                 }
                                                 
                                                 $licz_rekordy++;
@@ -294,7 +317,6 @@ print"<div align=center>";
                                             $temp_ilosc_sztuk_uzytkownik += $temp_ilosc_metrow_uzytkownik;
                                         }
                                         
-                                        //$temp_ilosc_sztuk_uzytkownik = (int)$temp_ilosc_sztuk_uzytkownik;
                                                         if($temp_ilosc_sztuk_uzytkownik > 0 &&  $temp_ilosc_sztuk_uzytkownik < 1)
                                                         {
                                                             $opis_sztuki = "sztuk";                                                           
@@ -328,32 +350,17 @@ print"<div align=center>";
   
                             }
                             print'<br>';
-                            
-                    print"</td>";
-                print"</tr>";
-            print"</TABLE>";
-print"</DIV>";
-print '<DIV class="dolny_do_tabeli" id="niedrukuj">';
-                            print '<DIV class="mniejszy_panel">';
-
-                                $ilosc_metrow = $ilosc_metrow/45;
-                                $ilosc_sztuk += $ilosc_metrow;
-
-                                print "<B><font class='opis_paneli'>Do druku :  "; echo (int)"$ilosc_sztuk"; print"   sztuk</font></B><br><br>";
-
-                                print'<FORM ACTION="wykres_ile_do_druku.php" METHOD=POST>';
-                                print'<INPUT TYPE="submit" VALUE="Wykres" CLASS="btn">';
-                                print'</FORM>';                          
-                            print "</DIV>";
-print"</DIV>";
-
-
-print "<B><font class='opis_raport'>Do druku :  "; echo (int)"$ilosc_sztuk"; print"   sztuk</font></B><br><br>";
-
-
-
-?>
-
+                          */  
+                          //print"przykładowy tekst";
+                          ?>
+            
+                    </td>
+                </tr>
+            </TABLE>
+            
+                          
+ 
+<DIV class="dolny_do_tabeli" id="niedrukuj"></DIV>
 
 </body>
 </html>
