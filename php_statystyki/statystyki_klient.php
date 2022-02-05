@@ -53,9 +53,9 @@
                              <!--////////////koniec przycisk i nazwa odbiorcy////////////////-->
                             <br>
                             <!--/////////////przycisk data wybierz/////////////////////////-->
-                            <B><font class='opis_paneli'>STATYSTYKI ARTYKUŁ</font></B><br><br>
+                            <B><font class='opis_paneli'>STATYSTYKI KLIENCI</font></B><br><br>
 
-                            <FORM ACTION="statystyki_artykul.php" METHOD=POST>
+                            <FORM ACTION="statystyki_klient.php" METHOD=POST>
                                 <INPUT TYPE="hidden" NAME="co" VALUE="opcja">
 
                                 <div align=center>
@@ -107,37 +107,40 @@
 </DIV>
 
 <div align=center>   
-            <?PHP print"<br/><B><font size=3 color=#00004d>Artykuły od: $data_od do: $data_do</font></B><br/><br>"; ?>
+            <?PHP print"<br/><B><font size=3 color=#00004d>Klienci od: $data_od do: $data_do</font></B><br/><br>"; ?>
              
             
             <TABLE cellpadding = '0'  cellspacing = '0' border = '0' style='width: 98%; height: 100%;'>               
                 <tr>
                     <td align="center">
                         <DIV class="centrowanie">
-                            <TABLE width=80%>
-                                <TR bgcolor = #6666ff><TD id='td_kolor' class='regaly_td_font' style='width: 5%;'><B>Lp.</B></TD><TD id='td_kolor' class='regaly_td_font' style='width: 60%;'><B>ARTYKUŁ</B></TD><TD id='td_kolor' class='regaly_td_font' style='width: 20%;'><B>METRY</B></TD><TD id='td_kolor' class='regaly_td_font' style='width: 15%;'><B> % </B></TD></TR>
+                            <TABLE style="width: 80%">
+                                <TR bgcolor = #6666ff><TD id='td_kolor' class='regaly_td_font' style='width: 5%;'><B>Lp.</B></TD><TD id='td_kolor' class='regaly_td_font' style='width: 60%;'><B>KLIENT</B></TD><TD id='td_kolor' class='regaly_td_font' style='width: 20%;'><B>METRY</B></TD><TD id='td_kolor' class='regaly_td_font' style='width: 15%;'><B> % </B></TD></TR>
                                     <?PHP
                                         require_once '../class.Polocz.php';
                                         $polocz = new Polocz();
                                         
                                         $polocz->open(); 
                                         mysql_select_db("ZAMOWIENIA_DRUKARNIA") or die ("nie ma zamowienia_drukarnia");                                  
-                                        $wynik_suma = mysql_query("SELECT sum(METRY_RAPORTY_ZMIANA) AS 'metry_suma' FROM view_wszystko_metry_raporty_sztuki WHERE Artykul_zamowienia != '' AND Artykul_zamowienia != 'Zamówienie nr..' AND Artykul_zamowienia != 'ZZZZ' AND Artykul_zamowienia != 'test 2020' AND Artykul_zamowienia != 'wwwww' AND Artykul_zamowienia != 'DZIANINA PES/T' AND Artykul_zamowienia NOT LIKE 'TKANINA%' AND Artykul_zamowienia != '200 BAWEŁNA' AND Artykul_zamowienia NOT LIKE '%VISKOZA' AND Data BETWEEN '$data_od' AND '$data_do';") or die ("zle pytanie zamowienia sumy");                                                                                              
+                                        $wynik_suma = mysql_query("SELECT sum(METRY_RAPORTY_ZMIANA) AS 'metry_suma' FROM view_wszystko_metry_raporty_sztuki WHERE Odbiorca_zamowienia != '' AND Data BETWEEN '$data_od' AND '$data_do';") or die ("zle pytanie zamowienia sumy");                                                                                              
+                                        
                                         $polocz->close();
                                         
                                         while($rekord_suma = mysql_fetch_assoc($wynik_suma)){
                                             $suma_metrow = $rekord_suma['metry_suma'];
-                                        }
+                                        }                                       
                                         
                                         $polocz->open(); 
                                         mysql_select_db("ZAMOWIENIA_DRUKARNIA") or die ("nie ma zamowienia_drukarnia");                                  
-                                        $wynik = mysql_query("SELECT Artykul_zamowienia AS 'Artykuł', sum(METRY_RAPORTY_ZMIANA) AS 'Ilość_metrów' FROM view_wszystko_metry_raporty_sztuki WHERE Artykul_zamowienia != '' AND Artykul_zamowienia != 'Zamówienie nr..' AND Artykul_zamowienia != 'ZZZZ' AND Artykul_zamowienia != 'test 2020' AND Artykul_zamowienia != 'wwwww' AND Artykul_zamowienia != 'DZIANINA PES/T' AND Artykul_zamowienia NOT LIKE 'TKANINA%' AND Artykul_zamowienia != '200 BAWEŁNA' AND Artykul_zamowienia NOT LIKE '%VISKOZA' AND Data BETWEEN '$data_od' AND '$data_do' GROUP BY Artykul_zamowienia ORDER BY sum(METRY_RAPORTY_ZMIANA) DESC;") or die ("zle pytanie zamowienia");                                                                                              
+                                        $wynik = mysql_query("SELECT Odbiorca_zamowienia AS 'Odbiorca', sum(METRY_RAPORTY_ZMIANA) AS 'Ilość_metrów' FROM view_wszystko_metry_raporty_sztuki WHERE Odbiorca_zamowienia != '' AND Data BETWEEN '$data_od' AND '$data_do' GROUP BY `Odbiorca_zamowienia` ORDER BY sum(`METRY_RAPORTY_ZMIANA`) DESC;") or die ("zle pytanie zamowienia");                                                                                              
+                                       
                                         $polocz->close();
                                         
+                                         
                                         $lp = 1;
                                         while($rekord = mysql_fetch_assoc($wynik)){
                                             
-                                            $artykul = $rekord['Artykuł'];
+                                            $klient = $rekord['Odbiorca'];
                                             $metry = $rekord['Ilość_metrów'];
                                             
                                             $procent = (100 * $metry)/$suma_metrow;
@@ -148,8 +151,9 @@
                                                 $kolor = '#FFFFFF';
                                             }else{
                                                 $kolor = '#F0FFFF';
-                                            }  
-                                            print"<TR><TD id='td_kolor' align = 'center' bgcolor=$kolor>$lp</TD><TD id='td_kolor' bgcolor=$kolor>$artykul</TD><TD id='td_kolor' align='right' bgcolor=$kolor>$metry</TD><TD id='td_kolor' align = 'center' bgcolor=$kolor>$procent %</TD></TR>\n";
+                                            }                              
+                                            
+                                            print"<TR><TD id='td_kolor' align = 'center' bgcolor=$kolor>$lp</TD><TD id='td_kolor' bgcolor=$kolor>$klient</TD><TD id='td_kolor' align='right' bgcolor=$kolor>$metry</TD><TD id='td_kolor' align = 'center' bgcolor=$kolor>$procent %</TD></TR>\n";
                                             $lp ++;
                                             
                                         }
@@ -157,10 +161,13 @@
                                     
                                     ?>
                             </TABLE>
-                        </DIV>          
+                        </DIV>           
                     </td>
                 </tr>
-            </TABLE> 
+            </TABLE>
+            
+                          
+ 
 <DIV class="dolny_do_tabeli" id="niedrukuj"></DIV>
 
 </body>
