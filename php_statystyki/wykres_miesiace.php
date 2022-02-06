@@ -27,6 +27,8 @@
         <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 	<script src="//code.jquery.com/jquery-1.10.2.js"></script>
         <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+	   
          <link rel="stylesheet" href="/resources/demos/style.css">
              	
 </head>
@@ -102,7 +104,9 @@
             <TABLE cellpadding = '0'  cellspacing = '0' border = '0' style='width: 98%; height: 100%;'>               
                 <tr>
                     <td align="center">
-                        <DIV class="centrowanie">
+                        <DIV align="center">
+                            <div id="chart_div_miesiace" style="width: 80%; height: 530px"></div>
+                       
                             <!--
                             <TABLE style="width: 80%">
                                 <TR bgcolor = #6666ff><TD id='td_kolor' class='regaly_td_font' style='width: 5%;'><B>Lp.</B></TD><TD id='td_kolor' class='regaly_td_font' style='width: 60%;'><B>KLIENT</B></TD><TD id='td_kolor' class='regaly_td_font' style='width: 20%;'><B>METRY</B></TD><TD id='td_kolor' class='regaly_td_font' style='width: 15%;'><B> % </B></TD></TR>
@@ -163,6 +167,136 @@
  
 <DIV class="dolny_do_tabeli" id="niedrukuj"></DIV>
 
+<DIV id="info_temp"></DIV>
+
+<script type="text/javascript">
+    /*
+    var info = document.getElementById("info_temp");
+    var tab_lata = [2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022];
+    //var tab_suma_metry = [1,2,3,4,5,6,7,8,9,10];
+    var tab_suma_metry = [];
+    
+    var wartosc_metry = "";
+    var n = 0;
+    
+    
+    while(document.getElementById("tab_metry_miesiace"+n+""))
+    {
+        wartosc_metry = document.getElementById("tab_metry_miesiace"+n+"");
+        
+        tab_suma_metry.push(parseInt(wartosc_metry.innerHTML));
+        
+        n++;
+    }
+     
+     
+    
+    google.charts.load('current', {packages: ['corechart', 'line']});
+    //google.charts.load('current', {'packages':['bar']});
+    google.charts.setOnLoadCallback(drawLineColors);
+    
+    function drawLineColors() {
+            var data = new google.visualization.DataTable();
+            data.addColumn('number', 'X');
+            data.addColumn('number', 'SZTUKI DO DRUKU');
+            //data.addColumn('number', 'WYDRUKOWANE');
+       
+            for(var i=0; i<10; i++)
+            {
+                data.addRows([[tab_lata[i], tab_suma_metry[i]]]);
+            }
+     	  
+            var options = {
+              hAxis: {
+                title: 'Lata'
+              },
+              vAxis: {
+                title: 'Ilość'
+              },
+              //colors: ['#a52714', '#097138']
+                      colors: ['#097138']
+            };
+            var chart = new google.visualization.LineChart(document.getElementById('chart_div_miesiace'));
+            chart.draw(data, options);
+     
+        }
+    
+    
+    
+    var str_temp = "";
+    
+    for(var i=0; i<tab_suma_metry.length; i++)
+    {
+        str_temp += tab_suma_metry[i] + "<br>";
+    }
+    
+    info.innerHTML = str_temp;
+    */
+
+</script>
+
+<script type="text/javascript">
+    
+    var info = document.getElementById("info_temp");
+    var tab_lata = [2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022];
+    //var tab_suma_metry = [1,2,3,4,5,6,7,8,9,10];
+    var tab_suma_metry = [];
+    var n = 0;
+    
+    
+    while(document.getElementById("tab_metry_miesiace"+n+""))
+    {
+        wartosc_metry = document.getElementById("tab_metry_miesiace"+n+"");
+        
+        tab_suma_metry.push(parseInt(wartosc_metry.innerHTML));
+        
+        n++;
+    }
+    
+    google.charts.load("current", {packages:['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+        
+      var kolor = "gold";
+      var data = google.visualization.arrayToDataTable([
+        ["Element", "Metry", { role: "style" } ],       
+        ["2013", tab_suma_metry[0], kolor],
+        ["2014", tab_suma_metry[1], kolor],
+        ["2015", tab_suma_metry[2], kolor],
+        ["2016", tab_suma_metry[3], kolor],
+        ["2017", tab_suma_metry[4], kolor],
+        ["2018", tab_suma_metry[5], kolor],
+        ["2019", tab_suma_metry[6], kolor],
+        ["2020", tab_suma_metry[7], kolor],
+        ["2021", tab_suma_metry[8], kolor],
+        ["2022", tab_suma_metry[9], kolor]
+        
+        
+        
+      ]);
+      
+      
+        
+      var view = new google.visualization.DataView(data);
+      view.setColumns([0, 1,
+                       { calc: "stringify",
+                         sourceColumn: 1,
+                         type: "string",
+                         role: "annotation" },
+                       2]);
+
+      var options = {
+        title: "Metry wydrukowane rok / miesiąc",
+        //width: 1200,
+        //height: 400,
+        bar: {groupWidth: "80%"},
+        legend: { position: "none" },
+      };
+      var chart = new google.visualization.ColumnChart(document.getElementById("chart_div_miesiace"));
+      chart.draw(view, options);
+    }
+  </script>
+
 </body>
 </html>
 
@@ -204,10 +338,10 @@ function combobox_maszyny($wybrana_maszyna)
 }
 function pobierz_dane_metry_miesiace($wybrany_miesiac, $maszyna)
 {
-    var_dump($wybrany_miesiac);
-    print"<br>";
-    var_dump($maszyna);
-    print"<br>";
+    //var_dump($wybrany_miesiac);
+    //print"<br>";
+    //var_dump($maszyna);
+    //print"<br>";
     
     require_once '../class.Polocz.php';
     $polocz = new Polocz();
@@ -234,10 +368,10 @@ function pobierz_dane_metry_miesiace($wybrany_miesiac, $maszyna)
             $szukaj_od =  (string)($rok + $i)."0101";
             $szukaj_do =  (string)($rok + $i)."0131";
         }
-        var_dump($szukaj_od);
-        print"do ";
-        var_dump($szukaj_do);
-        print"<br>";
+        //var_dump($szukaj_od);
+        //print"do ";
+        //var_dump($szukaj_do);
+        //print"<br>";
         
         if($maszyna == "razem_(Reactive)")
         {
@@ -260,8 +394,11 @@ function pobierz_dane_metry_miesiace($wybrany_miesiac, $maszyna)
             //var_dump($pozycja); print" = "; var_dump($notes);
             //print"<br>";
         }  
-        var_dump($suma_metrow);
-        print"<br>";
+        //var_dump($suma_metrow);
+        //print"<br>";
+        
+        print"<div id='tab_metry_miesiace".$i."' style='display: none;'>".$suma_metrow."</div>";
+                           
         $suma_metrow = 0;
     }
     

@@ -232,10 +232,10 @@
                             //////////////////tabela z wykresem ////////////////////////////////
                         ?>
                         <br><B><font size='5' color='blue'>Wykres: Ile sztuk do druku</font></B><br><br>                       
-                        <div id="chart_div" style="width: 1000px; height: 500px"></div>
+                        <div id="chart_div" style="width: 80%; height: 500px"></div>
                         </br>
                         <br><B><font size='5' color='blue'>Wykres: Ile sztuk wydrukowane</font></B><br><br>
-                        <div id="chart_div2" style="width: 1000px; height: 500px"></div>
+                        <div id="chart_div2" style="width: 80%; height: 500px"></div>
                            <!-- ////////////////koniec tabeli z wykresem /////////////////////-->
                     </td>
                 </tr>
