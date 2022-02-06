@@ -199,7 +199,7 @@
                         }
                         for($M = $i; $M < 24; $M++)
                         {
-                            $tab_ilosc_do_druku[$M] = $tab_ilosc_do_druku[$i-1];
+                            //$tab_ilosc_do_druku[$M] = $tab_ilosc_do_druku[$i-1];
                         } 
                             ////////////dane do ilosci wydrukowane/////////////////
                         $polocz->open();
@@ -220,7 +220,7 @@
                             $tab_ilosc_do_druku_wydrukowane[$i] = $rekord['Ilosc_sztuk']; 
                             $tab_godzina_wydrukowane[$i] = substr($tab_godzina_wpisu_wydrukowane[$i], 0, 2);	  
                             
-                            //print"<div id='tab_ilosc_do_druku_wydrukowane".$i."'>".$tab_ilosc_do_druku_wydrukowane[$i]."</div><br>";
+                           //print"<div id='tab_ilosc_do_druku_wydrukowane".$i."'>".$tab_ilosc_do_druku_wydrukowane[$i]."</div><br>";
                             //print"<div id='tab_godzina_wydrukowane".$i."'>".$tab_godzina_wydrukowane[$i]."</div>";
                         
                             $i++;
@@ -355,6 +355,7 @@
     
 <script type="text/javascript">
 
+        //var info_temp = document.getElementById("info_temp");
         var tablica_godzina = [];
         //var tablica_ilosc = [];
         var tablica_wydrukowane = [];
@@ -362,13 +363,19 @@
           ///////przepisanie tablicy php do javaScript//////////////
          /*
         var k = 0;
-        while(document.getElementById("tab_ilosc_do_druku_wydrukowane"+k+""))
+        while(document.getElementById("tab_godzina"+k+""))
         {
-            tablica_godzina.push(document.getElementById("tab_godzina_wydrukowane"+k+"").value);
+            tablica_godzina.push(document.getElementById("$tab_godzina"+k+"").value);
             tablica_wydrukowane.push(document.getElementById("tab_ilosc_do_druku_wydrukowane"+k+"").value);
             k++;
         }
+      
+         for(var i=0; i<tablica_godzina.length; i++)
+         {
+             info_temp.innerHTML += "wartosc = " + tablica_godzina[i] + "<br>";
+         }
     */
+    
     
          
 	  
