@@ -89,10 +89,24 @@
                 <tr>
                     <td align="center">
                         <DIV align="center">
-                            <div id="chart_div_lata" style="width: 80%; height: 530px"></div>
+                            <div id="pole_wykres_lewy_panel"></div>
+                            <div id="chart_div_lata"></div>
+                            <div id="pole_checkbox">
+                                <br><br><br><br><br>
+                                <input id="check2013" type="checkbox" NAME="2013" VALUE="2013" checked=checked>  2013
+                                    <br>
+                                <input id="check2014" type="checkbox" NAME="2014" VALUE="2014" checked=checked>  2014
+                                       
+                                
+                            </div>
                        
                               
                                     <?PHP
+                                        pobierz_dane_metry_rok($_POST['maszyna'], "2013");
+                                        pobierz_dane_metry_rok($_POST['maszyna'], "2014");
+                                        pobierz_dane_metry_rok($_POST['maszyna'], "2015");
+                                        pobierz_dane_metry_rok($_POST['maszyna'], "2016");
+                                        pobierz_dane_metry_rok($_POST['maszyna'], "2017");
                                         pobierz_dane_metry_rok($_POST['maszyna'], "2018");
                                         pobierz_dane_metry_rok($_POST['maszyna'], "2019");
                                         pobierz_dane_metry_rok($_POST['maszyna'], "2020");
@@ -112,6 +126,10 @@
 
 <script type="text/javascript">
     
+    rysuj_wykres();
+   
+function rysuj_wykres()
+{
     var info = document.getElementById("info_temp");
     
     
@@ -120,12 +138,57 @@
     //var tab_metry_rok = document.getElementById("tab_metry_rok20210");
     //info.innerHTML = tab_metry_rok.innerHTML;
     
+    var tab_suma_metry2013 = [];
+    var tab_suma_metry2014 = [];
+    var tab_suma_metry2015 = [];
+    var tab_suma_metry2016 = [];
+    var tab_suma_metry2017 = [];
     var tab_suma_metry2018 = [];
     var tab_suma_metry2019 = [];
     var tab_suma_metry2020 = [];
     var tab_suma_metry2021 = [];
     var tab_suma_metry2022 = [];
     
+    var n = 0;   
+    while(document.getElementById("tab_metry_rok2013"+n+""))
+    {
+        var wartosc_metry = document.getElementById("tab_metry_rok2013"+n+"");
+        
+        tab_suma_metry2013.push(parseInt(wartosc_metry.innerHTML));
+        n++;
+    }
+    var n = 0;   
+    while(document.getElementById("tab_metry_rok2014"+n+""))
+    {
+        var wartosc_metry = document.getElementById("tab_metry_rok2014"+n+"");
+        
+        tab_suma_metry2014.push(parseInt(wartosc_metry.innerHTML));
+        n++;
+    }
+    var n = 0;   
+    while(document.getElementById("tab_metry_rok2015"+n+""))
+    {
+        var wartosc_metry = document.getElementById("tab_metry_rok2015"+n+"");
+        
+        tab_suma_metry2015.push(parseInt(wartosc_metry.innerHTML));
+        n++;
+    }
+    var n = 0;   
+    while(document.getElementById("tab_metry_rok2016"+n+""))
+    {
+        var wartosc_metry = document.getElementById("tab_metry_rok2016"+n+"");
+        
+        tab_suma_metry2016.push(parseInt(wartosc_metry.innerHTML));
+        n++;
+    }
+    var n = 0;   
+    while(document.getElementById("tab_metry_rok2017"+n+""))
+    {
+        var wartosc_metry = document.getElementById("tab_metry_rok2017"+n+"");
+        
+        tab_suma_metry2017.push(parseInt(wartosc_metry.innerHTML));
+        n++;
+    }
     var n = 0;   
     while(document.getElementById("tab_metry_rok2018"+n+""))
     {
@@ -173,6 +236,11 @@
     function drawLineColors() {
             var data = new google.visualization.DataTable();
             data.addColumn('number', 'X');
+            data.addColumn('number', '2013');
+            data.addColumn('number', '2014');
+            data.addColumn('number', '2015');
+            data.addColumn('number', '2016');
+            data.addColumn('number', '2017');
             data.addColumn('number', '2018');
             data.addColumn('number', '2019');
             data.addColumn('number', '2020');
@@ -183,6 +251,11 @@
             for(var i=0; i<12; i++)
             {
                 data.addRows([[tab_miesiac[i], 
+                        tab_suma_metry2013[i],
+                        tab_suma_metry2014[i],
+                        tab_suma_metry2015[i],
+                        tab_suma_metry2016[i],
+                        tab_suma_metry2017[i],
                         tab_suma_metry2018[i],
                         tab_suma_metry2019[i],
                         tab_suma_metry2020[i], 
@@ -197,12 +270,13 @@
               vAxis: {
                 title: 'Ilość'
               },              
-                colors: ['#FF6600', '#FFFF00', '#097138', '#a52714', '#000066']
+                colors: ['#C0C0C0', '#FF00FF', '#00FF00', '#0000FF','#000000', '#FF6600', '#FFFF00', '#097138', '#a52714', '#000066']
             };
             var chart = new google.visualization.LineChart(document.getElementById('chart_div_lata'));
             chart.draw(data, options);
      
         }
+}
     
     //info.innerHTML = tab_suma_metry2021[0];
     
