@@ -59,7 +59,7 @@
                                 <INPUT TYPE="hidden" NAME="co" VALUE="opcja">
 
                                 <div align=center>
-                                    <TABLE CELLPADDING=0 CELLSPACING=0 BORDER=0 style='width: 35%;'>
+                                    <TABLE class="pole_comboBox">
                                         <TR>
                                             <TD class='td_pole_spacja'><B><font class="opis_texbox">OD: </font></B></TD>
                                             <TD class='td_pole_daty_statystyki'>
@@ -113,7 +113,7 @@
             <TABLE cellpadding = '0'  cellspacing = '0' border = '0' style='width: 98%; height: 100%;'>               
                 <tr>
                     <td align="center">
-                        <DIV class="centrowanie">
+                        <DIV align="center">
                             <TABLE width=80%>
                                 <TR bgcolor = #6666ff><TD id='td_kolor' class='regaly_td_font' style='width: 5%;'><B>Lp.</B></TD><TD id='td_kolor' class='regaly_td_font' style='width: 60%;'><B>ARTYKUŁ</B></TD><TD id='td_kolor' class='regaly_td_font' style='width: 20%;'><B>METRY</B></TD><TD id='td_kolor' class='regaly_td_font' style='width: 15%;'><B> % </B></TD></TR>
                                     <?PHP

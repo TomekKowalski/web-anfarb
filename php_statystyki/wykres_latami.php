@@ -55,9 +55,9 @@
                              <!--////////////koniec przycisk i nazwa odbiorcy////////////////-->
                             <br>
                             <!--/////////////przycisk data wybierz/////////////////////////-->
-                            <B><font class='opis_paneli'>METRY MIESIĄCE</font></B><br><br>
+                            <B><font class='opis_paneli'>METRY ROK</font></B><br><br>
 
-                            <FORM ACTION="wykres_miesiace.php" METHOD=POST>
+                            <FORM ACTION="wykres_latami.php" METHOD=POST>
                                 <INPUT TYPE="hidden" NAME="co" VALUE="opcja">
 
                                 <div align=center>
@@ -68,13 +68,7 @@
                                                 <?PHP
                                                     combobox_maszyny($_POST['maszyna']);
                                                 ?>
-                                            </TD>   
-                                            <TD class='td_pole_spacja'></TD>
-                                            <TD class='td_pole_comboBox_statystyki'>
-                                                <?PHP
-                                                    combobox_miesiace($_POST['miesiac']);
-                                                ?>
-                                            </TD>   
+                                            </TD>                                                
                                             <TD class='td_pole_spacja'></TD>
                                             <TD class='td_pole_przycisk'>
                                                 <INPUT TYPE="submit" VALUE="Wybierz" CLASS="btn"> 
@@ -90,27 +84,20 @@
 </TABLE>
 </DIV>
 
-<div align=center>   
-            <?PHP 
-                $miesiac = $_POST['miesiac'];               
-                if($miesiac == "")
-                {
-                    print"<br/><B><font size=3 color=#00004d>Styczeń</font></B><br/><br>"; 
-                }else{
-                    print"<br/><B><font size=3 color=#00004d>$miesiac</font></B><br/><br>"; 
-                }
-            ?>
-             
-            
+<div align=center>              
             <TABLE cellpadding = '0'  cellspacing = '0' border = '0' style='width: 98%; height: 100%;'>               
                 <tr>
                     <td align="center">
                         <DIV align="center">
-                            <div id="chart_div_miesiace" style="width: 80%; height: 530px"></div>
+                            <div id="chart_div_lata" style="width: 80%; height: 530px"></div>
                        
                               
                                     <?PHP
-                                        pobierz_dane_metry_miesiace($miesiac, $_POST['maszyna']);                                   
+                                        pobierz_dane_metry_rok($_POST['maszyna'], "2018");
+                                        pobierz_dane_metry_rok($_POST['maszyna'], "2019");
+                                        pobierz_dane_metry_rok($_POST['maszyna'], "2020");
+                                        pobierz_dane_metry_rok($_POST['maszyna'], "2021");
+                                        pobierz_dane_metry_rok($_POST['maszyna'], "2022");                                   
                                     ?>                           
                         </DIV>           
                     </td>
@@ -126,63 +113,103 @@
 <script type="text/javascript">
     
     var info = document.getElementById("info_temp");
-    var tab_lata = [2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020, 2021, 2022];
-    //var tab_suma_metry = [1,2,3,4,5,6,7,8,9,10];
-    var tab_suma_metry = [];
-    var n = 0;
     
     
-    while(document.getElementById("tab_metry_miesiace"+n+""))
+    //var tab_miesiac = ["Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec", "Lipiec", "Sierpień", "Wrzesień", "Październik", "Listopad", "Grudzień"];
+    var tab_miesiac = [1,2,3,4,5,6,7,8,9,10,11,12];
+    //var tab_metry_rok = document.getElementById("tab_metry_rok20210");
+    //info.innerHTML = tab_metry_rok.innerHTML;
+    
+    var tab_suma_metry2018 = [];
+    var tab_suma_metry2019 = [];
+    var tab_suma_metry2020 = [];
+    var tab_suma_metry2021 = [];
+    var tab_suma_metry2022 = [];
+    
+    var n = 0;   
+    while(document.getElementById("tab_metry_rok2018"+n+""))
     {
-        wartosc_metry = document.getElementById("tab_metry_miesiace"+n+"");
+        var wartosc_metry = document.getElementById("tab_metry_rok2018"+n+"");
         
-        tab_suma_metry.push(parseInt(wartosc_metry.innerHTML));
+        tab_suma_metry2018.push(parseInt(wartosc_metry.innerHTML));
+        n++;
+    }
+    var n = 0;   
+    while(document.getElementById("tab_metry_rok2019"+n+""))
+    {
+        var wartosc_metry = document.getElementById("tab_metry_rok2019"+n+"");
         
+        tab_suma_metry2019.push(parseInt(wartosc_metry.innerHTML));
+        n++;
+    }
+    var n = 0;   
+    while(document.getElementById("tab_metry_rok2020"+n+""))
+    {
+        var wartosc_metry = document.getElementById("tab_metry_rok2020"+n+"");
+        
+        tab_suma_metry2020.push(parseInt(wartosc_metry.innerHTML));
+        n++;
+    }
+    var n = 0;   
+    while(document.getElementById("tab_metry_rok2021"+n+""))
+    {
+        var wartosc_metry = document.getElementById("tab_metry_rok2021"+n+"");
+        
+        tab_suma_metry2021.push(parseInt(wartosc_metry.innerHTML));
+        n++;
+    }
+    var n = 0;   
+    while(document.getElementById("tab_metry_rok2022"+n+""))
+    {
+        var wartosc_metry = document.getElementById("tab_metry_rok2022"+n+"");
+        
+        tab_suma_metry2022.push(parseInt(wartosc_metry.innerHTML));
         n++;
     }
     
-    google.charts.load("current", {packages:['corechart']});
-    google.charts.setOnLoadCallback(drawChart);
-    function drawChart() {
-        
-      var kolor = "gold";
-      var data = google.visualization.arrayToDataTable([
-        ["Element", "Metry", { role: "style" } ],       
-        ["2013", tab_suma_metry[0], kolor],
-        ["2014", tab_suma_metry[1], kolor],
-        ["2015", tab_suma_metry[2], kolor],
-        ["2016", tab_suma_metry[3], kolor],
-        ["2017", tab_suma_metry[4], kolor],
-        ["2018", tab_suma_metry[5], kolor],
-        ["2019", tab_suma_metry[6], kolor],
-        ["2020", tab_suma_metry[7], kolor],
-        ["2021", tab_suma_metry[8], kolor],
-        ["2022", tab_suma_metry[9], kolor]
-        
-        
-        
-      ]);
-      
-      
-        
-      var view = new google.visualization.DataView(data);
-      view.setColumns([0, 1,
-                       { calc: "stringify",
-                         sourceColumn: 1,
-                         type: "string",
-                         role: "annotation" },
-                       2]);
-
-      var options = {
-        title: "Metry wydrukowane rok / miesiąc",
-        //width: 1200,
-        //height: 400,
-        bar: {groupWidth: "80%"},
-        legend: { position: "none" },
-      };
-      var chart = new google.visualization.ColumnChart(document.getElementById("chart_div_miesiace"));
-      chart.draw(view, options);
-    }
+    google.charts.load('current', {packages: ['corechart', 'line']});
+    google.charts.setOnLoadCallback(drawLineColors);
+    
+    function drawLineColors() {
+            var data = new google.visualization.DataTable();
+            data.addColumn('number', 'X');
+            data.addColumn('number', '2018');
+            data.addColumn('number', '2019');
+            data.addColumn('number', '2020');
+            data.addColumn('number', '2021');
+            data.addColumn('number', '2022');
+            //data.addColumn('number', 'WYDRUKOWANE');
+       
+            for(var i=0; i<12; i++)
+            {
+                data.addRows([[tab_miesiac[i], 
+                        tab_suma_metry2018[i],
+                        tab_suma_metry2019[i],
+                        tab_suma_metry2020[i], 
+                        tab_suma_metry2021[i], 
+                        tab_suma_metry2022[i]]]);
+            }
+     	  
+            var options = {
+              hAxis: {
+                title: 'Miesiące'
+              },
+              vAxis: {
+                title: 'Ilość'
+              },              
+                colors: ['#FF6600', '#FFFF00', '#097138', '#a52714', '#000066']
+            };
+            var chart = new google.visualization.LineChart(document.getElementById('chart_div_lata'));
+            chart.draw(data, options);
+     
+        }
+    
+    //info.innerHTML = tab_suma_metry2021[0];
+    
+    
+     // var chart = new google.visualization.ColumnChart(document.getElementById("chart_div_lata"));
+     // chart.draw(data, options);
+    
   </script>
 
 </body>
@@ -190,23 +217,6 @@
 
 <?PHP
 
-function combobox_miesiace($wybrany_miesiac)
-{
-    $tab_miesiac = array("Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec", "Lipiec", "Sierpień", "Wrzesień", "Październik", "Listopad", "Grudzień");
-    
-    print'<SELECT class="opis_select" NAME="miesiac" style="width: 100%;">';
-    
-        for( $i=0; $i< 12; $i++)
-        {
-            print"<OPTION VALUE=".$tab_miesiac[$i].">".$tab_miesiac[$i]."</OPTION>";
-        }
-        if($wybrany_miesiac != "")
-        {
-            print"<OPTION SELECTED VALUE=".$wybrany_miesiac.">".$wybrany_miesiac."</OPTION>";
-			
-        }    
-    print'</SELECT>';   
-}
 function combobox_maszyny($wybrana_maszyna)
 {
     $tab_maszyna = array("razem_(Reactive)");
@@ -224,7 +234,7 @@ function combobox_maszyny($wybrana_maszyna)
         }    
     print'</SELECT>';   
 }
-function pobierz_dane_metry_miesiace($wybrany_miesiac, $maszyna)
+function pobierz_dane_metry_rok($maszyna, $rok)
 {
     //var_dump($wybrany_miesiac);
     //print"<br>";
@@ -240,81 +250,37 @@ function pobierz_dane_metry_miesiace($wybrany_miesiac, $maszyna)
     $maszyna_COLORS_5 = "COLORS-5 (Reactive)";
     $maszyna_COLORS_6 = "COLORS-6 (Reactive)";
 
-    if($wybrany_miesiac == "")
-    {
-        $wybrany_miesiac = "Styczeń";
-    }
     if($maszyna == "")
     {
         $maszyna = "razem_(Reactive)";
     }
-    $rok = 2013;
-    for($i=0; $i<10; $i++)
+    
+    $suma_metrow = 0;
+   
+    for($i=0; $i<12; $i++)
     {
-        if($wybrany_miesiac == "Styczeń")
+        if ($i<9)
         {
-            $szukaj_od =  (string)($rok + $i)."0101";
-            $szukaj_do =  (string)($rok + $i)."0131";
+                $szukaj_od = (string)$rok."0".(string)($i + 1)."01";
+                $szukaj_do = (string)$rok."0".(string)($i + 1)."31";
+
         }
-        if($wybrany_miesiac == "Luty")
+        if ($i >= 9)
         {
-            $szukaj_od =  (string)($rok + $i)."0201";
-            $szukaj_do =  (string)($rok + $i)."0231";
+                $szukaj_od = (string)$rok."".(string)($i + 1)."01";
+                $szukaj_do = (string)$rok."".(string)($i + 1)."31";
+
         }
-        if($wybrany_miesiac == "Marzec")
-        {
-            $szukaj_od =  (string)($rok + $i)."0301";
-            $szukaj_do =  (string)($rok + $i)."0331";
-        }
-        if($wybrany_miesiac == "Kwiecień")
-        {
-            $szukaj_od =  (string)($rok + $i)."0401";
-            $szukaj_do =  (string)($rok + $i)."0431";
-        }
-        if($wybrany_miesiac == "Maj")
-        {
-            $szukaj_od =  (string)($rok + $i)."0501";
-            $szukaj_do =  (string)($rok + $i)."0531";
-        }
-        if($wybrany_miesiac == "Czerwiec")
-        {
-            $szukaj_od =  (string)($rok + $i)."0601";
-            $szukaj_do =  (string)($rok + $i)."0631";
-        }
-        if($wybrany_miesiac == "Lipiec")
-        {
-            $szukaj_od =  (string)($rok + $i)."0701";
-            $szukaj_do =  (string)($rok + $i)."0731";
-        }
-        if($wybrany_miesiac == "Sierpień")
-        {
-            $szukaj_od =  (string)($rok + $i)."0801";
-            $szukaj_do =  (string)($rok + $i)."0831";
-        }
-        if($wybrany_miesiac == "Wrzesień")
-        {
-            $szukaj_od =  (string)($rok + $i)."0901";
-            $szukaj_do =  (string)($rok + $i)."0931";
-        }
-        if($wybrany_miesiac == "Październik")
-        {
-            $szukaj_od =  (string)($rok + $i)."1001";
-            $szukaj_do =  (string)($rok + $i)."1031";
-        }
-        if($wybrany_miesiac == "Listopad")
-        {
-            $szukaj_od =  (string)($rok + $i)."1101";
-            $szukaj_do =  (string)($rok + $i)."1131";
-        }
-        if($wybrany_miesiac == "Grudzień")
-        {
-            $szukaj_od =  (string)($rok + $i)."1201";
-            $szukaj_do =  (string)($rok + $i)."1231";
-        }
-        //var_dump($szukaj_od);
-        //print"do ";
-        //var_dump($szukaj_do);
-        //print"<br>";
+        
+        /*
+        var_dump($szukaj_od);
+        print"do ";
+        var_dump($szukaj_do);
+        print"<br>";
+         * 
+         */
+        
+        
         
         if($maszyna == "razem_(Reactive)")
         {
@@ -340,9 +306,10 @@ function pobierz_dane_metry_miesiace($wybrany_miesiac, $maszyna)
         //var_dump($suma_metrow);
         //print"<br>";
         
-        print"<div id='tab_metry_miesiace".$i."' style='display: none;'>".$suma_metrow."</div>";
-                           
-        $suma_metrow = 0;
+        //print"<div id='tab_metry_miesiace".$i."' style='display: none;'>".$suma_metrow."</div>";
+        print"<div id='tab_metry_rok".$rok."".$i."' style='display: none;'>".$suma_metrow."</div>";
+                          
+        $suma_metrow = 0;        
     }
     
     
