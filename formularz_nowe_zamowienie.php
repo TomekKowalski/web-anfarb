@@ -177,20 +177,7 @@
                             {
                                     $odbiorca = $_POST['wybrany_klient'];
                                     ////////////////wyszukiwanie z danego dnia /////////////////////////////
-                                    $data=$_POST['data_data'];
-
-
-                                    /*
-                                    $data_miesiac = substr($data,0, 2);
-                                    $data_dzien = substr($data,3, 2);
-                                    $data_rok = substr($data,6, 5);
-
-                                    $data_razem = $data_rok."-".$data_miesiac."-".$data_dzien;
-                                    $data = $data_razem;
-                                     * 
-                                     */
-                                    //print"data_razem: ";
-                                    //print_r($data_razem);
+                                    $data=$_POST['data_data'];                                  
                             }
  	
 
@@ -258,18 +245,8 @@
                                                 $uwagi_na_temat_wzoru = "Uwaga wzór: ".$wzor." został dodany automatycznie !!";                             
                                             }
                                         }
-                                        /*
-                                         print"<br>Wzor wg uwag: ";
-                                         print_r($wzor);
-                                         print"<br>Wzor pobrany z uwag: ";
-                                         print_r($wzor_pobrany_z_uwag); 
-                                         print"<br>rekord wzor :";
-                                         print_r($rekord_wzor); 
-
-                                         */
+                                        
                                         ////////koniec sprawdz nr wzoru /////////////////////////
-
-
 
                                         $numer_zamowienia = date("Y");
 
@@ -523,8 +500,8 @@
                                 print "<INPUT TYPE=hidden NAME=wybrany_klient VALUE='$odbiorca'>";
                                 print "<INPUT TYPE=hidden NAME=data_przycisk_zapisz VALUE='$data_wybrana'>";
                                 ////////checkboox////////////
-                                if($nr_parti == "") ////////PRZYCISK zmien status
-                                {
+                                //if($nr_parti == "") ////////PRZYCISK zmien status
+                                //{
                                     
                                         print '<INPUT TYPE="hidden" NAME="zmien_status" VALUE="'.$nr_wiersza_dla_check.'">';
                                          
@@ -532,7 +509,7 @@
                                         print'<INPUT TYPE="submit" NAME="przycisk_zmien_status" VALUE="Zmień status" CLASS="btn">';
                                         
                                     
-                                }
+                                //}
                                                    
                                 print"</FORM>";
                                 /*
