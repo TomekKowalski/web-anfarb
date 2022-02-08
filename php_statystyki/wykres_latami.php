@@ -92,16 +92,25 @@
                             <div id="pole_wykres_lewy_panel"></div>
                             <div id="chart_div_lata"></div>
                             <div id="pole_checkbox">
-                                <br><br><br><br><br>
-                                <input id="check2013" type="checkbox" NAME="2013" VALUE="2013" checked=checked>  2013
-                                    <br>
-                                <input id="check2014" type="checkbox" NAME="2014" VALUE="2014" checked=checked>  2014
+                                <br><br><br><br><br><br>
+                                <input id="zaznacz_wszystko" type="checkbox" name="checkbox" value="1"/> Zaznacz wszystko
+                                <br><br>    
+                                <?PHP
+                                            
+                                    for($i = 2013; $i<2023; $i++)
+                                    {
+                                        print'<input id="check'.$i.'" type="checkbox" NAME="'.$i.'" VALUE="'.$i.'"/>  '.$i.'';
+                                        print'<br>';
+                                    }
+                                ?>
+                                <!--<input id="check2014" type="checkbox" NAME="2014" VALUE="2014" checked=checked>  2014-->
                                        
                                 
                             </div>
                        
                               
                                     <?PHP
+                                    
                                         pobierz_dane_metry_rok($_POST['maszyna'], "2013");
                                         pobierz_dane_metry_rok($_POST['maszyna'], "2014");
                                         pobierz_dane_metry_rok($_POST['maszyna'], "2015");
@@ -109,7 +118,7 @@
                                         pobierz_dane_metry_rok($_POST['maszyna'], "2017");
                                         pobierz_dane_metry_rok($_POST['maszyna'], "2018");
                                         pobierz_dane_metry_rok($_POST['maszyna'], "2019");
-                                        pobierz_dane_metry_rok($_POST['maszyna'], "2020");
+                                        pobierz_dane_metry_rok($_POST['maszyna'], "2020");                                    
                                         pobierz_dane_metry_rok($_POST['maszyna'], "2021");
                                         pobierz_dane_metry_rok($_POST['maszyna'], "2022");                                   
                                     ?>                           
@@ -125,7 +134,49 @@
 <DIV id="info_temp"></DIV>
 
 <script type="text/javascript">
-    
+  
+        var checkZaznaczWszystko = document.getElementById("zaznacz_wszystko");
+        var checkBoxs = [];
+        var n = 2013;
+        while(document.getElementById("check"+n+""))
+        {
+            checkBoxs.push(document.getElementById("check"+n+""));
+            n++;
+        } 
+        ///////////klikniecie checkBox zaznacz wszystko //////////////////////
+        checkZaznaczWszystko.onclick = function()
+        {
+            if(document.getElementById("zaznacz_wszystko").checked === true)
+            {           
+                for(var i=0; i<checkBoxs.length; i++)
+                {
+                    //document.getElementById(checkBoxs[i].id).checked = true;
+                    checkBoxs[i].checked = true;
+                }
+            }
+            if(document.getElementById("zaznacz_wszystko").checked === false)
+            {
+                for(var i=0; i<checkBoxs.length; i++)
+                {
+                    //document.getElementById(checkBoxs[i].id).checked = false;
+                    checkBoxs[i].checked = false;
+                }
+            }
+            rysuj_wykres();
+        }; 
+        checkBoxs[8].checked = true;
+        checkBoxs[9].checked = true;
+        
+        /////////////klikniecie pojedynczego checkBox ////////////
+        for(var i=0; i<checkBoxs.length; i++)
+        {
+            checkBoxs[i].onclick = function()
+            {          
+                rysuj_wykres();
+            };
+        }
+        
+        
     rysuj_wykres();
    
 function rysuj_wykres()
@@ -149,85 +200,115 @@ function rysuj_wykres()
     var tab_suma_metry2021 = [];
     var tab_suma_metry2022 = [];
     
-    var n = 0;   
-    while(document.getElementById("tab_metry_rok2013"+n+""))
+    if(this.checkBoxs[0].checked === true)
     {
-        var wartosc_metry = document.getElementById("tab_metry_rok2013"+n+"");
-        
-        tab_suma_metry2013.push(parseInt(wartosc_metry.innerHTML));
-        n++;
+        var n = 0;   
+        while(document.getElementById("tab_metry_rok2013"+n+""))
+        {
+            var wartosc_metry = document.getElementById("tab_metry_rok2013"+n+"");
+
+            tab_suma_metry2013.push(parseInt(wartosc_metry.innerHTML));
+            n++;
+        }
     }
-    var n = 0;   
-    while(document.getElementById("tab_metry_rok2014"+n+""))
+    if(this.checkBoxs[1].checked === true)
     {
-        var wartosc_metry = document.getElementById("tab_metry_rok2014"+n+"");
-        
-        tab_suma_metry2014.push(parseInt(wartosc_metry.innerHTML));
-        n++;
+        var n = 0;   
+        while(document.getElementById("tab_metry_rok2014"+n+""))
+        {
+            var wartosc_metry = document.getElementById("tab_metry_rok2014"+n+"");
+
+            tab_suma_metry2014.push(parseInt(wartosc_metry.innerHTML));
+            n++;
+        }
     }
-    var n = 0;   
-    while(document.getElementById("tab_metry_rok2015"+n+""))
+    if(this.checkBoxs[2].checked === true)
     {
-        var wartosc_metry = document.getElementById("tab_metry_rok2015"+n+"");
-        
-        tab_suma_metry2015.push(parseInt(wartosc_metry.innerHTML));
-        n++;
+        var n = 0;   
+        while(document.getElementById("tab_metry_rok2015"+n+""))
+        {
+            var wartosc_metry = document.getElementById("tab_metry_rok2015"+n+"");
+
+            tab_suma_metry2015.push(parseInt(wartosc_metry.innerHTML));
+            n++;
+        }
     }
-    var n = 0;   
-    while(document.getElementById("tab_metry_rok2016"+n+""))
+    if(this.checkBoxs[3].checked === true)
     {
-        var wartosc_metry = document.getElementById("tab_metry_rok2016"+n+"");
-        
-        tab_suma_metry2016.push(parseInt(wartosc_metry.innerHTML));
-        n++;
+        var n = 0;   
+        while(document.getElementById("tab_metry_rok2016"+n+""))
+        {
+            var wartosc_metry = document.getElementById("tab_metry_rok2016"+n+"");
+
+            tab_suma_metry2016.push(parseInt(wartosc_metry.innerHTML));
+            n++;
+        }
     }
-    var n = 0;   
-    while(document.getElementById("tab_metry_rok2017"+n+""))
+    if(this.checkBoxs[4].checked === true)
     {
-        var wartosc_metry = document.getElementById("tab_metry_rok2017"+n+"");
-        
-        tab_suma_metry2017.push(parseInt(wartosc_metry.innerHTML));
-        n++;
+        var n = 0;   
+        while(document.getElementById("tab_metry_rok2017"+n+""))
+        {
+            var wartosc_metry = document.getElementById("tab_metry_rok2017"+n+"");
+
+            tab_suma_metry2017.push(parseInt(wartosc_metry.innerHTML));
+            n++;
+        }
     }
-    var n = 0;   
-    while(document.getElementById("tab_metry_rok2018"+n+""))
+    if(this.checkBoxs[5].checked === true)
     {
-        var wartosc_metry = document.getElementById("tab_metry_rok2018"+n+"");
-        
-        tab_suma_metry2018.push(parseInt(wartosc_metry.innerHTML));
-        n++;
+        var n = 0;   
+        while(document.getElementById("tab_metry_rok2018"+n+""))
+        {
+            var wartosc_metry = document.getElementById("tab_metry_rok2018"+n+"");
+
+            tab_suma_metry2018.push(parseInt(wartosc_metry.innerHTML));
+            n++;
+        }
     }
-    var n = 0;   
-    while(document.getElementById("tab_metry_rok2019"+n+""))
+    if(this.checkBoxs[6].checked === true)
     {
-        var wartosc_metry = document.getElementById("tab_metry_rok2019"+n+"");
-        
-        tab_suma_metry2019.push(parseInt(wartosc_metry.innerHTML));
-        n++;
+        var n = 0;   
+        while(document.getElementById("tab_metry_rok2019"+n+""))
+        {
+            var wartosc_metry = document.getElementById("tab_metry_rok2019"+n+"");
+
+            tab_suma_metry2019.push(parseInt(wartosc_metry.innerHTML));
+            n++;
+        }
     }
-    var n = 0;   
-    while(document.getElementById("tab_metry_rok2020"+n+""))
+    if(this.checkBoxs[7].checked === true)
     {
-        var wartosc_metry = document.getElementById("tab_metry_rok2020"+n+"");
-        
-        tab_suma_metry2020.push(parseInt(wartosc_metry.innerHTML));
-        n++;
+        var n = 0;   
+        while(document.getElementById("tab_metry_rok2020"+n+""))
+        {
+            var wartosc_metry = document.getElementById("tab_metry_rok2020"+n+"");
+
+            tab_suma_metry2020.push(parseInt(wartosc_metry.innerHTML));
+            n++;
+        }
     }
-    var n = 0;   
-    while(document.getElementById("tab_metry_rok2021"+n+""))
+    if(this.checkBoxs[8].checked === true)
     {
-        var wartosc_metry = document.getElementById("tab_metry_rok2021"+n+"");
-        
-        tab_suma_metry2021.push(parseInt(wartosc_metry.innerHTML));
-        n++;
+        var n = 0;   
+        while(document.getElementById("tab_metry_rok2021"+n+""))
+        {
+            var wartosc_metry = document.getElementById("tab_metry_rok2021"+n+"");
+
+            tab_suma_metry2021.push(parseInt(wartosc_metry.innerHTML));
+            n++;
+        }
     }
-    var n = 0;   
-    while(document.getElementById("tab_metry_rok2022"+n+""))
+    if(this.checkBoxs[9].checked === true)
     {
-        var wartosc_metry = document.getElementById("tab_metry_rok2022"+n+"");
-        
-        tab_suma_metry2022.push(parseInt(wartosc_metry.innerHTML));
-        n++;
+        var n = 0;   
+        while(document.getElementById("tab_metry_rok2022"+n+""))
+        {
+            var wartosc_metry = document.getElementById("tab_metry_rok2022"+n+"");
+
+            tab_suma_metry2022.push(parseInt(wartosc_metry.innerHTML));
+            n++;
+        }
     }
     
     google.charts.load('current', {packages: ['corechart', 'line']});
