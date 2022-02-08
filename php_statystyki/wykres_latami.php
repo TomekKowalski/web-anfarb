@@ -185,7 +185,9 @@ function rysuj_wykres()
     
     
     //var tab_miesiac = ["Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec", "Lipiec", "Sierpień", "Wrzesień", "Październik", "Listopad", "Grudzień"];
-    var tab_miesiac = [1,2,3,4,5,6,7,8,9,10,11,12];
+    var tab_miesiac = ["Sty.", "Lut", "Mar.", "Kwi.", "Maj", "Cze.", "Lip.", "Sie.", "Wrz.", "Paz.", "Lis.", "Gru."];
+   
+    //var tab_miesiac = [1,2,3,4,5,6,7,8,9,10,11,12];
     //var tab_metry_rok = document.getElementById("tab_metry_rok20210");
     //info.innerHTML = tab_metry_rok.innerHTML;
     
@@ -316,7 +318,8 @@ function rysuj_wykres()
     
     function drawLineColors() {
             var data = new google.visualization.DataTable();
-            data.addColumn('number', 'X');
+            //data.addColumn('number', 'X');
+            data.addColumn('string', 'X');
             data.addColumn('number', '2013');
             data.addColumn('number', '2014');
             data.addColumn('number', '2015');
