@@ -232,17 +232,13 @@ print"</DIV>";
 
 print"<br><br><br><br><br><br><br><br><br><br><br><br><br>";
 print '<DIV id="panel_dolny_ilosc_do_druku" class="dolny_do_tabeli">';
-                            print '<DIV class="mniejszy_panel">';
+        print '<DIV class="mniejszy_panel">';
 
-                                $ilosc_metrow = $ilosc_metrow/45;
-                                $ilosc_sztuk += $ilosc_metrow;
+            $ilosc_metrow = $ilosc_metrow/45;
+            $ilosc_sztuk += $ilosc_metrow;
 
-                                print "<B><font class='opis_paneli'>Do druku :  "; echo (int)"$ilosc_sztuk"; print"   sztuk</font></B><br>";
-
-                                print'<FORM ACTION="wykres_ile_do_druku.php" METHOD=POST>';
-                                print'<INPUT TYPE="submit" VALUE="Wykres" CLASS="btn">';
-                                print'</FORM>';                          
-                            print "</DIV>";
+            print "<B><font class='opis_paneli'>Do druku :  "; echo (int)"$ilosc_sztuk"; print"   sztuk</font></B><br>";                                                        
+        print "</DIV>";
 print"</DIV>";
 
 

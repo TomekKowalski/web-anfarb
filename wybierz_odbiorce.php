@@ -613,6 +613,20 @@ print'<TABLE border="0" style="width: 100%; height: 100%;">';
             print'</div>';
              
              
+     
+        print"</td>";
+    print"</tr>"; 
+    print"<tr>";
+        print"<td align=center>";       
+                //////////////////kontener przyciski statystyki ANFARB////////////////////////////////////////////               
+            if($_SESSION['uprawnienia'] == "admin" || $_SESSION['uprawnienia'] == "admin_strona")
+            {
+                print'<div class="panel_1ogowanie">';
+                    require_once "./wybierz_odbiorce.kontener_statystyki_anfarb.php";
+                print'</div>';
+            }
+             
+             
     } 
         print"</td>";
     print"</tr>"; 
