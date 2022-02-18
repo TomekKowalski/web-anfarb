@@ -174,7 +174,7 @@
             
     <br><br><br><br><br><br><br><br><br><br><br><br><br>                     
  
-    <DIV class="dolny_do_tabeli" id="niedrukuj">
+    <DIV id="panel_dolny_ilosc_do_druku" class="dolny_do_tabeli nie_drukuj">
         <DIV class="mniejszy_panel">
              <B><font class='opis_paneli'>Razem : <?PHP print"$suma_kg_wyswietl" ?>     kg</font></B><br>                                                    
        

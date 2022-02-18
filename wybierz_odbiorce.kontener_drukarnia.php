@@ -47,6 +47,20 @@
                                     <a href="php_magazyn_damaz/magazyn_damaz.php" class="button">Magazyn-data</a>
                                 </td>
                             </tr>
+                            <tr>
+                                <td> 
+                                    
+                                    <!--<a href="do_druku.php" class="button">Do druku</a>-->
+                                </td>
+                                <td>
+                                    
+                                    <a href="magazyn_dzianin_anfarb.php" class="button">Magazyn-art.</a>
+                                </td>
+                                <td> 
+                                    
+                                    <!--<a href="php_magazyn_damaz/magazyn_damaz.php" class="button">Magazyn-data</a>-->
+                                </td>
+                            </tr>
                         </TABLE>
                      
 
