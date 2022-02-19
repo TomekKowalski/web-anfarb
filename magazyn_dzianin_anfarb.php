@@ -98,7 +98,7 @@
                     <td align="center">
                         <DIV align="center">
                             <TABLE width=80%>
-                                <TR bgcolor = #6666ff><TD id='td_kolor' class='regaly_td_font' style='width: 5%;'><B>Lp.</B></TD><TD id='td_kolor' class='regaly_td_font' style='width: 10%;'><B>NR PARTI</B></TD><TD id='td_kolor' class='regaly_td_font' style='width: 30%;'><B>ARTYKKUŁ</B></TD><TD id='td_kolor' class='regaly_td_font' style='width: 10%;'><B>ILOŚĆ SZTUK</B></TD><TD id='td_kolor' class='regaly_td_font' style='width: 10%;'><B>WYKORZYSTANE / ZAPAS</B></TD><TD id='td_kolor' class='regaly_td_font' style='width: 20%;'><B>UWAGI</B></TD></TR>
+                                <TR bgcolor = #6666ff><TD id='td_kolor' class='regaly_td_font' style='width: 5%;'><B>Lp.</B></TD><TD id='td_kolor' class='regaly_td_font' style='width: 10%;'><B>NR PARTI</B></TD><TD id='td_kolor' class='regaly_td_font' style='width: 30%;'><B>ARTYKKUŁ</B></TD><TD id='td_kolor' class='regaly_td_font' style='width: 10%;'><B>ILOŚĆ SZTUK</B></TD><TD id='td_kolor' class='regaly_td_font' style='width: 5%;'><B>W / ZAPAS</B></TD><TD id='td_kolor' class='regaly_td_font' style='width: 30%;'><B>UWAGI</B></TD><TD id='td_kolor' class='regaly_td_font' style='width: 10%;'><B>TOKA / WÓZEK</B></TD></TR>
                                     <?PHP
                                         require_once 'class.Polocz.php';
                                         $polocz = new Polocz();
@@ -117,8 +117,9 @@
                                         
                                         $polocz->open(); 
                                         mysql_select_db("ZAMOWIENIA_DRUKARNIA") or die ("nie ma zamowienia_drukarnia");                                  
-                                        $wynik = mysql_query("SELECT Nr_parti, Artykul, Ilosc, Wykorzystane_zapas, Uwagi, Data, Korekta FROM view_magazyn_dzianin_napawania WHERE Status = '1' and Artykul NOT LIKE '%VISKOZA%' AND Artykul NOT LIKE '%TKANINA%' AND Toka_wozek != 'REGAŁ' AND Nr_parti LIKE '$nr_parti_wybrany%' AND Artykul LIKE '$artykul_wybrany%' GROUP BY ID_Karta_nr ORDER BY Artykul;") or die ("zle pytanie zamowienia");                                                                                              
+                                        $wynik = mysql_query("SELECT Nr_parti, Artykul, Ilosc, Wykorzystane_zapas, Uwagi, Data, Korekta_na_strone, Toka_wozek FROM view_magazyn_dzianin_napawania WHERE Status = '1' and Artykul NOT LIKE '%VISKOZA%' AND Artykul NOT LIKE '%TKANINA%' AND Toka_wozek != 'REGAŁ' AND Nr_parti LIKE '$nr_parti_wybrany%' AND Artykul LIKE '$artykul_wybrany%' GROUP BY ID_Karta_nr ORDER BY Artykul;") or die ("zle pytanie zamowienia");                                                                                              
                                         //$wynik = mysql_query("SELECT Nr_parti FROM view_magazyn_dzianin_napawania;") or die ("zle pytanie zamowienia");                                                                                              
+                                        //$wynik = mysql_query("SELECT N.Nr_parti AS Nr_parti, N.Artykul AS Artykul, N.Ilosc AS Ilosc, N.Wykorzystane_zapas AS Wykorzystane_zapas, N.Uwagi AS Uwagi, N.Data AS Data, N.Korekta AS Korekta, W.Wykorzystane AS Wykorzystane FROM (view_magazyn_dzianin_napawania N LEFT JOIN view_magazyn_dzianin_suma_wykorzystane W ON N.Nr_parti = W.Nr_parti) WHERE N.Status = '1' and N.Artykul NOT LIKE '%VISKOZA%' AND N.Artykul NOT LIKE '%TKANINA%' AND N.Toka_wozek != 'REGAŁ' AND N.Nr_parti LIKE '$nr_parti_wybrany%' AND N.Artykul LIKE '$artykul_wybrany%' GROUP BY N.ID_Karta_nr ORDER BY N.Artykul;") or die ("zle pytanie zamowienia");                                                                                              
                                         
                                         $polocz->close();
                                         
@@ -132,28 +133,23 @@
                                             $wykorzystane_zapas = $rekord['Wykorzystane_zapas'];
                                             $uwagi = $rekord['Uwagi'];
                                             $rok = $rekord['Data'];
-                                            $korekta = $rekord['Korekta'];
+                                            $korekta = $rekord['Korekta_na_strone'];
+                                            $toka_wozek = $rekord['Toka_wozek'];
                                             
                                             
-                                            $polocz->open(); 
-                                            mysql_select_db("ZAMOWIENIA_DRUKARNIA") or die ("nie ma zamowienia_drukarnia");                                  
-                                            $wynik_suma = mysql_query("SELECT sum(SZTUKI_ZMIANA) AS sztuki_wykorzystane FROM view_wykorzystane_magazyn_dzianin WHERE Artykul_zamowienia LIKE '$artykul%' AND `Nr_parti` LIKE '$nr_parti%' AND DATA LIKE '$rok%';") or die ("zle pytanie zamowienia sumy");                                                                                              
-                                            //$wynik_suma = mysql_query("SELECT sum(SZTUKI_ZMIANA) AS sztuki_wykorzystane FROM view_wykorzystane_magazyn_dzianin WHERE Artykul_zamowienia LIKE '$artykul%' AND `Nr_parti` LIKE '$nr_parti%';") or die ("zle pytanie zamowienia sumy");                                                                                              
                                             
-                                            $polocz->close();
-                                        
-                                            while($rekord_suma = mysql_fetch_assoc($wynik_suma)){
-                                                $suma_metrow = $rekord_suma['sztuki_wykorzystane'];
-                                            }
+                                            $ilosc_do_wyswietlenia = (int)($ilosc - $korekta);
                                             
-                                            //var_dump($suma_metrow);
-                                            
-                                            $ilosc_do_wyswietlenia = (int)($ilosc - $suma_metrow + $korekta);
-                                            
+                                            /*
                                             print"<br>";
+                                            print"ROK = "; var_dump($rok);
+                                            print"NR PARTI = "; var_dump($nr_parti);
+                                            print"ARTYKUL = "; var_dump($artykul);
                                             print"wykorzystane = "; var_dump($suma_metrow);
                                             print"ilosc = "; var_dump($ilosc);
                                             print"ilosc_do_wyswietlenia = "; var_dump($ilosc_do_wyswietlenia);
+                                             * 
+                                             */
                                             
                                             /*
                                             $procent = (100 * $metry)/$suma_metrow;
@@ -165,7 +161,7 @@
                                             }else{
                                                 $kolor = '#F0FFFF';
                                             }  
-                                            print"<TR><TD id='td_kolor' align = 'center' bgcolor=$kolor>$lp</TD><TD id='td_kolor' bgcolor=$kolor>$nr_parti</TD><TD id='td_kolor' align='left' bgcolor=$kolor>$artykul</TD><TD id='td_kolor' align = 'center' bgcolor=$kolor>$ilosc_do_wyswietlenia</TD><TD id='td_kolor' align = 'center' bgcolor=$kolor>$wykorzystane_zapas</TD><TD id='td_kolor' align = 'left' bgcolor=$kolor>$uwagi</TD></TR>\n";
+                                            print"<TR><TD id='td_kolor' align = 'center' bgcolor=$kolor>$lp</TD><TD id='td_kolor' bgcolor=$kolor>$nr_parti</TD><TD id='td_kolor' align='left' bgcolor=$kolor>$artykul</TD><TD id='td_kolor' align = 'center' bgcolor=$kolor>$ilosc_do_wyswietlenia</TD><TD id='td_kolor' align = 'center' bgcolor=$kolor>$wykorzystane_zapas</TD><TD id='td_kolor' align = 'left' bgcolor=$kolor>$uwagi</TD><TD id='td_kolor' align = 'left' bgcolor=$kolor>$toka_wozek</TD></TR>\n";
                                             $lp ++;
                                             
                                         }
