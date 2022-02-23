@@ -98,7 +98,7 @@
                     <td align="center">
                         <DIV align="center">
                             <TABLE width=80%>
-                                <TR bgcolor = #6666ff><TD id='td_kolor' class='regaly_td_font' style='width: 5%;'><B>Lp.</B></TD><TD id='td_kolor' class='regaly_td_font' style='width: 10%;'><B>NR PARTI</B></TD><TD id='td_kolor' class='regaly_td_font' style='width: 30%;'><B>ARTYKKUŁ</B></TD><TD id='td_kolor' class='regaly_td_font' style='width: 10%;'><B>ILOŚĆ SZTUK</B></TD><TD id='td_kolor' class='regaly_td_font' style='width: 5%;'><B>W / ZAPAS</B></TD><TD id='td_kolor' class='regaly_td_font' style='width: 30%;'><B>UWAGI</B></TD><TD id='td_kolor' class='regaly_td_font' style='width: 10%;'><B>TOKA / WÓZEK</B></TD></TR>
+                                <TR bgcolor = #6666ff><TD id='td_kolor' class='magazyn_td_font' style='width: 5%;'><B>Lp.</B></TD><TD id='td_kolor' class='magazyn_td_font' style='width: 10%;'><B>NR PARTI</B></TD><TD id='td_kolor' class='magazyn_td_font' style='width: 45%;'><B>ARTYKKUŁ</B></TD><TD id='td_kolor' class='magazyn_td_font' style='width: 5%;'><B>ILOŚĆ SZTUK</B></TD><TD id='td_kolor' class='magazyn_td_font' style='width: 5%;'><B>W / ZAPAS</B></TD><TD id='td_kolor' class='magazyn_td_font' style='width: 20%;'><B>UWAGI</B></TD><TD id='td_kolor' class='magazyn_td_font' style='width: 10%;'><B>TOKA / WÓZEK</B></TD></TR>
                                     <?PHP
                                         require_once 'class.Polocz.php';
                                         $polocz = new Polocz();
