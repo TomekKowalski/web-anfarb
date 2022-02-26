@@ -34,19 +34,20 @@ session_start();
                                 <td>
                                     <a href="php_statystyki/wykres_miesiace_anfarb.php" class="button">An-Farb Miesiące</a>
                                 </td> 
-                                <!--
+                                
                             </tr>
                             <tr>
                                 <td>
-                                    <a href="php_statystyki/wykres_latami.php" class="button">Wykres rok</a>
+                                    <!--<a href="php_statystyki/wykres_latami.php" class="button">Wykres rok</a>-->
                                 </td>                              
                                 <td>
-                                    <a href="php_statystyki/wykres_miesiace.php" class="button">Miesiące</a>
-                                </td>   
+                                    <a href="php_statystyki/wykres_latami_anfarb.php" class="button">An-Farb rok</a>
+                                </td>  
+                                
                                 <td>
-                                    <a href="php_statystyki/wykres_dnia.php" class="button">Wykres dnia</a>
+                                    <!--<a href="php_statystyki/wykres_dnia.php" class="button">Wykres dnia</a>-->
                                 </td> 
-                                -->
+                                
                             </tr>
                         </TABLE>                  
         </td>   
