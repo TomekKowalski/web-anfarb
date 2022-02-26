@@ -30,10 +30,11 @@ session_start();
                                 <td>
                                     <a href="php_statystyki/statystyki_artykul_anfarb.php" class="button">Artykuły An-Farb</a>
                                 </td> 
-                                <!--
+                                
                                 <td>
-                                    <a href="php_statystyki/wykres_dnia.php" class="button">Wykres dnia</a>
+                                    <a href="php_statystyki/wykres_miesiace_anfarb.php" class="button">An-Farb Miesiące</a>
                                 </td> 
+                                <!--
                             </tr>
                             <tr>
                                 <td>
