@@ -32,9 +32,18 @@
 <?PHP
                         require_once 'class.Polocz.php';
                         $polocz = new Polocz();
+                        
+                        $filtr_odbiorcy = $_POST['filter_odbiorca'];
+                        if(!$filtr_odbiorcy)
+                        {
+                            $filtr_odbiorcy = $_POST['filter_szukaj_odbiorcy'];                         
+                        }
+                                               
                         $polocz->open();
                         mysql_select_db("ZAMOWIENIA_DRUKARNIA") or die ("nie ma zamowienia_drukarnia");
-                        $lista_odbiorca = mysql_query("SELECT DISTINCT * FROM ODBIORCA_TAB ORDER BY Nazwa_odbiorca") or die ("zle pytanie");
+                        //$lista_odbiorca = mysql_query("SELECT DISTINCT * FROM ODBIORCA_TAB ORDER BY Nazwa_odbiorca") or die ("zle pytanie");
+                        $lista_odbiorca = mysql_query("SELECT DISTINCT * FROM ODBIORCA_TAB WHERE Nazwa_odbiorca LIKE '$filtr_odbiorcy%' ORDER BY Nazwa_odbiorca") or die ("zle pytanie");
+                                               
                         $polocz->close(); 
                         while($rekord_odbiorca = mysql_fetch_assoc($lista_odbiorca))
                         {
@@ -51,7 +60,6 @@ print'<DIV class="panel_glowny">';
 
 if($_POST['opcja'] || $_POST['opcja02'])
 { 
-    
                             if(!$_POST['zapisz_uwagi'])
                             {
                                 foreach($odbiorcy as $klucz => $wartosc)

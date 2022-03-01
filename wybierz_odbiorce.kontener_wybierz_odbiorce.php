@@ -21,10 +21,27 @@ session_start();
     </tr>
     <tr>
         <td align=center>           
-                        <FORM ACTION="wybierz_odbiorce.php" METHOD=POST>
-                        <INPUT TYPE="hidden" NAME="opcja" VALUE="opcja">
+                        
                         <TABLE CELLPADDING=0 CELLSPACING=0 BORDER=0 style="width: 100%; height: 100%">
                             <TR>
+                                <TD>
+                                    <FORM ACTION="wybierz_odbiorce.php" METHOD=POST>
+                                        <?PHP
+                                            print'<INPUT class="text_box_filtr" type ="text" name="filter_odbiorca" value="'.$filtr_odbiorcy.'">';
+                                        ?>
+                                        <!--<INPUT class="text_box_filtr" type ="text" name="filter_odbiorca" value="">-->
+                                        
+                                        <INPUT TYPE="submit" VALUE="Filtr odbiorca" CLASS="filtr_btn" style="width: 30%;">         
+                                    </FORM>                   
+                                </TD>
+                                <TD></TD>
+                                <TD></TD>
+                                <TD></TD>
+                            </TR>
+                            <TR>
+                                <FORM ACTION="wybierz_odbiorce.php" METHOD=POST>
+                                <INPUT TYPE="hidden" NAME="opcja" VALUE="opcja">
+                                <?PHP print'<INPUT TYPE="hidden" NAME="filter_szukaj_odbiorcy" VALUE="'.$filtr_odbiorcy.'">'; ?>
                                 <TD style="width: 55%">                
                                     <SELECT class="opis_select" NAME="opcja_odbiorca" style="width: 98%;">
                                         <?PHP
@@ -35,12 +52,22 @@ session_start();
                                                 print"<OPTION SELECTED VALUE='$odbiorca'>$odbiorca</OPTION>";
                                             }
                                             else{
-                                               print'<OPTION SELECTED VALUE="">-&gt; wybierz, odbiorce:';  
+                                                if(!$filtr_odbiorcy)
+                                                {
+                                                    print'<OPTION SELECTED VALUE="">-&gt; wybierz, odbiorce:</OPTION>'; 
+                                                }else{
+                                                    $odbiorca_temp = $odbiorcy[""];
+                                                    print"<OPTION SELECTED VALUE=''>$odbiorca_temp</OPTION>";             
+                                                    
+                                                }
                                             }
+                                            
+                                            
                                             foreach($odbiorcy as $klucz => $wartosc)
                                             {
                                                 print("<OPTION VALUE=\"$klucz\">".$wartosc);
                                             }
+                                            
                                         ?>
                                         
                                     </SELECT>
@@ -73,9 +100,9 @@ session_start();
                                     
                                     <INPUT TYPE="submit" VALUE="Szukaj" CLASS="btn" style="width: 100%;">
                                 </TD> 
+                                </FORM>
                             </TR>
-                        </TABLE>
-                        </FORM>
+                        </TABLE>        
         </td>
     </tr>   
 </TABLE>
