@@ -242,12 +242,17 @@ print"<TABLE cellpadding = '0'  cellspacing = '0' border = '0' style='width: 100
                                     $data_miesiac_p=date("m");
                                     $data_dzien_p=date("d");
                                     $data_rok_p=date("Y");
-                                    $data_wybrana_od = $data_miesiac_p."/".$data_dzien_p."/".$data_rok_p;
+                                    //$data_wybrana_od = $data_miesiac_p."/".$data_dzien_p."/".$data_rok_p;
+                                    $data_wybrana_od = $data_rok_p."-".$data_miesiac_p."-".$data_dzien_p;
                                 }else{
                                     $data_wybrana_od = $_POST['data_od'];
                                 }
+                                
                                 print'<B><font class="opis_texbox">DATA OD</font></B><br/>';
-                                print"<input class='text_box' style=\"width: 80%;\" type=\"text\" id=\"datepicker\" name=\"data_od\" value=\"$data_wybrana_od\">";
+                                //print"<input class='text_box' style=\"width: 80%;\" type=\"text\" id=\"datepicker\" name=\"data_od\" value=\"$data_wybrana_od\">";
+                                print"<input class='text_box' type='date' name='data_od' value='".$data_wybrana_od."'>";
+                               
+                                /*
                                 //////konvertowanie daty 2021/07/04  na 2021-07-04
                                 $data_miesiac = substr($data_wybrana_od,0, 2);
                                 $data_dzien = substr($data_wybrana_od,3, 2);
@@ -255,6 +260,9 @@ print"<TABLE cellpadding = '0'  cellspacing = '0' border = '0' style='width: 100
 
                                 $data_razem = $data_rok."-".$data_miesiac."-".$data_dzien;
                                 $data_wybrana_od = $data_razem;
+                                 * 
+                                 */
+                                
                             print"</TD>";                             
                             print"<TD valign=bottom style='width: 12%; text-align: left;'>";
                                 if($_POST['data_do'] == "")
@@ -262,19 +270,24 @@ print"<TABLE cellpadding = '0'  cellspacing = '0' border = '0' style='width: 100
                                     $data_miesiac_p=date("m");
                                     $data_dzien_p=date("d");
                                     $data_rok_p=date("Y");
-                                    $data_wybrana_do = $data_miesiac_p."/".$data_dzien_p."/".$data_rok_p;
+                                    //$data_wybrana_do = $data_miesiac_p."/".$data_dzien_p."/".$data_rok_p;
+                                    $data_wybrana_do = $data_rok_p."-".$data_miesiac_p."-".$data_dzien_p;
                                 }else{
                                     $data_wybrana_do = $_POST['data_do'];
                                 }
                                 print'<B><font class="opis_texbox">DATA DO</font></B><br/>';
-                                print"<input class='text_box' style=\"width: 80%;\" type=\"text\" id=\"datepicker02\" name=\"data_do\" value=\"$data_wybrana_do\">";
-                                //////konvertowanie daty 2021/07/04  na 2021-07-04
+                                //print"<input class='text_box' style=\"width: 80%;\" type=\"text\" id=\"datepicker02\" name=\"data_do\" value=\"$data_wybrana_do\">";
+                                print"<input class='text_box' type='date' name='data_do' value='".$data_wybrana_do."'>";
+                                /*
+                                 //////konvertowanie daty 2021/07/04  na 2021-07-04
                                 $data_miesiac = substr($data_wybrana_do,0, 2);
                                 $data_dzien = substr($data_wybrana_do,3, 2);
                                 $data_rok = substr($data_wybrana_do,6, 5);
 
                                 $data_razem = $data_rok."-".$data_miesiac."-".$data_dzien;
                                 $data_wybrana_do = $data_razem;
+                                 * 
+                                 */
                             print"</TD>";                 
                             print"<TD valign=bottom style='width: 5%; text-align: center;'>";
                                 print "";
