@@ -50,7 +50,7 @@
                             <tr>
                                 <td> 
                                     
-                                    <!--<a href="do_druku.php" class="button">Do druku</a>-->
+                                    <a href="zaliczka.php" class="button">Zaliczka</a>
                                 </td>
                                 <td>
                                     
