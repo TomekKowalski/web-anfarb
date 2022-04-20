@@ -103,6 +103,9 @@
                                         
                                         $polocz->close();
                                         
+                                        $data=date("Y-m-d");
+                                        $czas=date("H:i");
+                                        
                                         $odbiorca = $_POST['wybrany_klient'];
                                         
                                         if($odbiorca === "OGANES HMAJAK")
@@ -128,12 +131,34 @@
                                                 $query_status = "UPDATE ZAMOWIENIA_TAB SET Status_zamowienia = 'ZALICZKA' WHERE Nr_wiersza = '$check_nr_wiersza';";
                                                 $wynik_status = mysql_query($query_status);
                                                 $polocz->close();
+                                                
+                                                $polocz->open();
+                                        
+                                                $rodzaj_zmiany = "ZALICZKA";
+                                                $data_czas = "".$data."  ".$czas."";
+
+
+                                                $query4 = "INSERT INTO HISTORIA_ZMIAN_TAB (`data_zmiany`, `uzytkownik`, `rodzaj_zmiany`, `id_wiersza_zamowienia`) VALUES('$data_czas', '$zalogowany', '$rodzaj_zmiany', '$check_nr_wiersza')";
+                                                $wynik4 = mysql_query($query4) or die ("nie zapisano histori");
+                                                $polocz->close();
                                             }
                                             if($status_do_zmiany_sprawdzony == "ZALICZKA")
                                             {
                                                 $polocz->open();
                                                 $query_status = "UPDATE ZAMOWIENIA_TAB SET Status_zamowienia = 'DO DRUKU' WHERE Nr_wiersza = '$check_nr_wiersza';";
                                                 $wynik_status = mysql_query($query_status);
+                                                $polocz->close();
+                                                
+                                                
+                                                
+                                                $polocz->open();
+                                        
+                                                $rodzaj_zmiany = "DO DRUKU";
+                                                $data_czas = "".$data."  ".$czas."";
+
+
+                                                $query3 = "INSERT INTO HISTORIA_ZMIAN_TAB (`data_zmiany`, `uzytkownik`, `rodzaj_zmiany`, `id_wiersza_zamowienia`) VALUES('$data_czas', '$zalogowany', '$rodzaj_zmiany', '$check_nr_wiersza')";
+                                                $wynik3 = mysql_query($query3) or die ("nie zapisano histori");
                                                 $polocz->close();
                                             }
                                         }                                  
