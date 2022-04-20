@@ -679,6 +679,10 @@ function zapisywanie_uwag()
 function zmiana_statusu()
 {
     $ilosc = $_POST['wielkosc_tab_status_zaliczka'];
+    $zalogowany = $_SESSION['imie_nazwisko'];
+    
+    $data=date("Y-m-d");
+    $czas=date("H:i");
     
     require_once 'class.Polocz.php';
     $polocz = new Polocz();
@@ -700,6 +704,16 @@ function zmiana_statusu()
                 $query = "UPDATE ZAMOWIENIA_TAB SET Status_zamowienia = 'DO DRUKU' WHERE Nr_wiersza = '$ID_nr_wiersza';";
                 $wynik = mysql_query($query);
                 $polocz->close();  
+                
+                $polocz->open();
+                mysql_select_db("ZAMOWIENIA_DRUKARNIA") or die ("nie ma zamowienia_drukarnia");                       
+                $rodzaj_zmiany = "DO DRUKU";
+                $data_czas = "".$data."  ".$czas."";
+
+
+                $query3 = "INSERT INTO HISTORIA_ZMIAN_TAB (`data_zmiany`, `uzytkownik`, `rodzaj_zmiany`, `id_wiersza_zamowienia`) VALUES('$data_czas', '$zalogowany', '$rodzaj_zmiany', '$ID_nr_wiersza')";
+                $wynik3 = mysql_query($query3) or die ("nie zapisano histori");
+                $polocz->close();
             }
             
                 

@@ -103,8 +103,8 @@
                                         
                                         $polocz->close();
                                         
-                                        $data=date("Y-m-d");
-                                        $czas=date("H:i");
+                                        $data_status=date("Y-m-d");
+                                        $czas_status=date("H:i");
                                         
                                         $odbiorca = $_POST['wybrany_klient'];
                                         
@@ -135,7 +135,7 @@
                                                 $polocz->open();
                                         
                                                 $rodzaj_zmiany = "ZALICZKA";
-                                                $data_czas = "".$data."  ".$czas."";
+                                                $data_czas = "".$data_status."  ".$czas_status."";
 
 
                                                 $query4 = "INSERT INTO HISTORIA_ZMIAN_TAB (`data_zmiany`, `uzytkownik`, `rodzaj_zmiany`, `id_wiersza_zamowienia`) VALUES('$data_czas', '$zalogowany', '$rodzaj_zmiany', '$check_nr_wiersza')";
@@ -154,7 +154,7 @@
                                                 $polocz->open();
                                         
                                                 $rodzaj_zmiany = "DO DRUKU";
-                                                $data_czas = "".$data."  ".$czas."";
+                                                $data_czas = "".$data_status."  ".$czas_status."";
 
 
                                                 $query3 = "INSERT INTO HISTORIA_ZMIAN_TAB (`data_zmiany`, `uzytkownik`, `rodzaj_zmiany`, `id_wiersza_zamowienia`) VALUES('$data_czas', '$zalogowany', '$rodzaj_zmiany', '$check_nr_wiersza')";
