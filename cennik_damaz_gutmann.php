@@ -122,6 +122,16 @@ print"<DIV class='panel_glowny'>";
 
                                 $wybrany_nr_artykulu =$_POST['nr_artykulu'];
                                 $wybrana_nazwa_artykulu = $_POST['nazwa_artykulu'];
+                                
+                                $polocz->open(); 
+                                mysql_select_db("DZIEWIARNIA_CENY") or die ("nie ma DZIEWIARNIA_CENY");
+                                $wynik_EUR_druki = mysql_query("SELECT `kurs_euro_druki` FROM `KURS_EURO_DRUKI_TAB`;") or die ("zle pytanie wybor KURSU EUR");
+                                $polocz->close();
+                                
+                                while($rekord_EUR = mysql_fetch_assoc($wynik_EUR_druki))
+                                {
+                                    $kurs_EUR_druki = $rekord_EUR['kurs_euro_druki'];
+                                }
 
 
                                 //var_dump($wybrany_nr_artykulu);
@@ -174,10 +184,19 @@ print"<DIV class='panel_glowny'>";
 
                                          */
                                     }
+                                    $int_sprawdz_druki = strpos($nr_artykulu, "/D");
+                                                
+                                                
+                                    if($int_sprawdz_druki)
+                                    {
+                                        $kurs_EUR = $kurs_EUR_druki;
+                                    }
+                                    else{
+                                        $kurs_EUR = $rekord_3['kurs_euro'];
+                                    }
 
 
-
-                                    $kurs_EUR = $rekord_3['kurs_euro'];
+                                    //$kurs_EUR = $rekord_3['kurs_euro'];
                                    // print"<br>kurs EURO : ";
                                     //    print_r($kurs_EUR);
                                     $cena_EUR_za_kg_temp = $cena_netto_zl_za_kg / $kurs_EUR;
