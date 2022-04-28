@@ -87,7 +87,7 @@ print"<DIV class='panel_glowny'>";
             //print"filtr wzor :";
             //print_r($filtr_klient);
             //print_r($wzor_wyslany_do_zapisania);
-            var_dump($wzor_wyslany_do_zapisania);
+            
             foreach($odbiorcy as $klucz => $wartosc)
             {
                 //print"wchodzi_klucz.$klucz.=.$wartosc.<br>";
@@ -199,8 +199,7 @@ print"<TABLE cellpadding = '0'  cellspacing = '0' border = '0' style='width: 100
                         
                         if($wzor_wyslany_do_zapisania != "")
                         {
-                            print"wzor do zapisania: ";
-                            var_dump($wzor_wyslany_do_zapisania);
+                            
                             $polocz->open();
                             mysql_select_db("ZAMOWIENIA_DRUKARNIA") or die ("nie ma zamowienia_drukarnia");
                             $query = "INSERT INTO WYSLANE_WZORY_DO_KLIENTA_TAB(Klient, Nazwa_wzoru_wyslanego, Projektantka, Uwagi, Data) VALUES ('$odbiorca_wybrany_do_zapisania','$wzor_wyslany_do_zapisania','$kto_zalogowany','$uwagi_do_zapisania','$data_do_zapisania_razem')";
@@ -465,7 +464,7 @@ print"<TABLE cellpadding = '0'  cellspacing = '0' border = '0' style='width: 100
                     $kolor = '#FFFFFF';
                     print"<TR><TD id='td_kolor' bgcolor=$kolor>$klient</TD><TD id='td_kolor' align='left' bgcolor=$kolor><a href='WZORY_JPG_WSZYSTKIE/$numer_wzoru.jpg' data-lightbox='$numer_wzoru.jpg' data-title='$numer_wzoru'>$numer_wzoru</a></TD><TD id='td_kolor' align = 'left' bgcolor=$kolor>$nazwa_wzoru_wyslanego</TD><TD id='td_kolor' bgcolor=$kolor>$uwagi</TD><TD id='td_kolor' bgcolor=$kolor>$projektantka_baza</TD><TD id='td_kolor' align='center' bgcolor=$kolor>$data</TD>";
                         print"<TD id='td_kolor' align=center bgcolor=$kolor>";
-                                print'<FORM ACTION="wzory_od_klienta.php" METHOD=POST>'; 
+                                print'<FORM ACTION="wzory_wyslane_do_klienta.php" METHOD=POST>'; 
                                 //print "<INPUT TYPE=hidden NAME=wybrany_klient VALUE='$odbiorca'>";
                                 //print '<INPUT TYPE="hidden" NAME="usuwaj" VALUE="'.$nr_wiersza.'">';
                                 if($projektantka_baza == $zalogowany) ////////PRZYCISK USUN
@@ -573,8 +572,8 @@ print"<TABLE cellpadding = '0'  cellspacing = '0' border = '0' style='width: 100
                             print"<TR><TD id='td_kolor' width=10% bgcolor = #5F9F9F><B>NAZWA</B></TD><TD id='td_kolor' width=5% bgcolor = #5F9F9F><B>ILOŚC SZT.</B></TD></TR>";
                             $kolor = '#FFFFFF';
                             print"<TR><TD id='td_kolor' bgcolor=$kolor>Wzory razem</TD><TD id='td_kolor' align=center bgcolor=$kolor>$ilosc_wzorow</TD></TR>";
-                            print"<TR><TD id='td_kolor' bgcolor=$kolor>Wzory konwertowane</TD><TD id='td_kolor' align=center bgcolor=$kolor>$ilosc_wzorow_konwertowanych</TD></TR>";
-                            print"<TR><TD id='td_kolor' bgcolor=$kolor>Wzory poprawiane</TD><TD id='td_kolor' align=center bgcolor=$kolor>$ilosc_wzorow_poprawianych</TD></TR>";
+                            //print"<TR><TD id='td_kolor' bgcolor=$kolor>Wzory konwertowane</TD><TD id='td_kolor' align=center bgcolor=$kolor>$ilosc_wzorow_konwertowanych</TD></TR>";
+                            //print"<TR><TD id='td_kolor' bgcolor=$kolor>Wzory poprawiane</TD><TD id='td_kolor' align=center bgcolor=$kolor>$ilosc_wzorow_poprawianych</TD></TR>";
                             //print"<TR><TD id='td_kolor' bgcolor=$kolor>Marcela</TD><TD id='td_kolor' align=center bgcolor=$kolor>$ilosc_wzorow_Marcela</TD></TR>";
                             print"<TR><TD id='td_kolor' bgcolor=$kolor>Marta</TD><TD id='td_kolor' align=center bgcolor=$kolor>$ilosc_wzorow_Marta</TD></TR>";
                             print"<TR><TD id='td_kolor' bgcolor=$kolor>Ola</TD><TD id='td_kolor' align=center bgcolor=$kolor>$ilosc_wzorow_Ola</TD></TR>";
