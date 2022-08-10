@@ -36,12 +36,36 @@ print"<DIV class='panel_glowny'>";
         require_once 'class.Polocz.php';
         $polocz = new Polocz();
         
+        $polocz->open();
+        mysql_select_db("ZAMOWIENIA_DRUKARNIA") or die ("nie ma zamowienia_drukarnia");
+        $lista_nazwa_regalu = mysql_query("SELECT Nazwa_regalu FROM REGALY_NAZWY_TAB ORDER BY Nazwa_regalu") or die ("zle pytanie NAZWA REGALU");
+        $polocz->close();
+        while($rekord_regalu = mysql_fetch_assoc($lista_nazwa_regalu))
+        {
+            $nazwa_regalu[$i] = $rekord_regalu['Nazwa_regalu'];
+            $i++;   
+        }
+       // var_dump($nazwa_regalu);
+        
          
         if(isset($_POST['przycisk_szukaj']))///wcisniety przycisk szukaj
         {
             $odbiorca_wybrany = htmlspecialchars($_POST['filtr_klient_tex']);
             $filtr_nr_parti_wybrany = htmlspecialchars($_POST['filtr_nr_parti']);
             $filtr_artykul_wybrany = htmlspecialchars($_POST['filtr_artykul']);
+            $filtr_nazwa_regalu_klucz = htmlspecialchars($_POST['filtr_nazwa_regalu']);
+           
+            foreach($nazwa_regalu as $klucz => $wartosc)
+            {
+                //print"wchodzi_klucz.$klucz.=.$wartosc.<br>";
+                if($klucz == $filtr_nazwa_regalu_klucz)
+                {
+                    $nazwa_regalu_wybrany = htmlspecialchars($wartosc);
+                    //print"wchodzi";
+                }
+            }
+             //print"filtr nazwa regalu : ";
+             //var_dump($nazwa_regalu_wybrany); //filtr_nazwa_regalu
             /*
             print"filtr KLIENT :";
             print_r($odbiorca_wybrany);
@@ -75,17 +99,37 @@ print"<TABLE cellpadding = '0'  cellspacing = '0' border = '0' style='width: 100
                     print"<div align=center>";
                     print"<TABLE CELLPADDING=0 CELLSPACING=0 BORDER=0 style='width: 90%; height: 100%;'>";
                         print"<TR>";                                                  
-                            print"<TD valign=bottom style='width: 30%; text-align: left;'>";
+                            print"<TD valign=bottom style='width: 25%; text-align: left;'>";
                                 print'<B><font class="opis_texbox">KLIENT</font></B><br/>'; 
                                 print '<INPUT class="text_box" style="width: 95%;" TYPE="text" NAME="filtr_klient_tex" VALUE="'.$odbiorca_wybrany.'">';              
                             print"</TD>";                            
-                            print"<TD valign=bottom style='width: 30%; text-align: left;'>"; 
+                            print"<TD valign=bottom style='width: 25%; text-align: left;'>"; 
                                 print'<B><font class="opis_texbox">NR PARTI</font></B><br/>';
                                 print '<INPUT class="text_box" style="width: 95%;" TYPE="text" NAME="filtr_nr_parti" VALUE="'.$filtr_nr_parti_wybrany.'">';
                             print"</TD>";  
-                            print"<TD valign=bottom style='width: 30%; text-align: left;'>"; 
+                            print"<TD valign=bottom style='width: 25%; text-align: left;'>"; 
                                 print'<B><font class="opis_texbox">ARTYKUŁ</font></B><br/>';
                                 print '<INPUT class="text_box" style="width: 95%;" TYPE="text" NAME="filtr_artykul" VALUE="'.$filtr_artykul_wybrany.'">';
+                            print"</TD>";
+                            
+                            print"<TD valign=bottom style='width: 15%; text-align: left;'>"; 
+                                print'<B><font class="opis_texbox">REGAŁ</font></B><br/>';
+                                print'<SELECT class="opis_select" NAME="filtr_nazwa_regalu" style="width: 95%;">';  
+                                    
+                                    foreach($nazwa_regalu as $klucz => $wartosc)
+                                    {
+                                        print("<OPTION VALUE=\"$klucz\">".$wartosc); 
+                                    }
+                                    
+                                    if(isset($_POST['przycisk_szukaj']))///wcisniety przycisk szukaj
+                                    {
+                                        print("<OPTION SELECTED VALUE=\"$filtr_nazwa_regalu_klucz\">$nazwa_regalu_wybrany</OPTION>");   
+                                    }
+                                    
+                                     
+                                print'</SELECT>';
+                                
+                                //print '<INPUT class="text_box" style="width: 95%;" TYPE="text" NAME="filtr_artykul" VALUE="'.$filtr_artykul_wybrany.'">';
                             print"</TD>";
                                           
                             print"<TD valign=bottom style='width: 5%; text-align: center;'>";
@@ -116,12 +160,12 @@ print"<TABLE cellpadding = '0'  cellspacing = '0' border = '0' style='width: 100
     print"<tr>";
         print"<td align=center>";
             print"<TABLE border = '0' style='width: 95%; height: 100%;'>";
-                print"<TR><TD id='td_kolor' class='regaly_td_font' width=15% bgcolor = #6666ff><B>KLIENT</B></TD><TD id='td_kolor' class='regaly_td_font' width=15% bgcolor = #6666ff><B>NR PARTI</B></TD><TD id='td_kolor' class='regaly_td_font' width=30% bgcolor = #6666ff><B>ARTYKUŁ</B></TD><TD id='td_kolor' class='regaly_td_font' width=10% bgcolor = #6666ff><B>ILOŚĆ</B></TD><TD id='td_kolor' class='regaly_td_font' width=30% bgcolor = #6666ff><B>REGAŁ</B></TD></TR>";
-                if($odbiorca_wybrany != "" || $filtr_nr_parti_wybrany != "" || $filtr_artykul_wybrany != "")
+                print"<TR><TD id='td_kolor' class='regaly_td_font' width=15% bgcolor = #6666ff><B>KLIENT</B></TD><TD id='td_kolor' class='regaly_td_font' width=15% bgcolor = #6666ff><B>NR PARTI</B></TD><TD id='td_kolor' class='regaly_td_font' width=20% bgcolor = #6666ff><B>ARTYKUŁ</B></TD><TD id='td_kolor' class='regaly_td_font' width=10% bgcolor = #6666ff><B>ILOŚĆ</B></TD><TD id='td_kolor' class='regaly_td_font' width=20% bgcolor = #6666ff><B>UWAGI</B></TD><TD id='td_kolor' class='regaly_td_font' width=20% bgcolor = #6666ff><B>REGAŁ</B></TD></TR>";
+                if($odbiorca_wybrany != "" || $filtr_nr_parti_wybrany != "" || $filtr_artykul_wybrany != "" || $nazwa_regalu_wybrany != "")
                 {
                     $polocz->open();
                     mysql_select_db("ZAMOWIENIA_DRUKARNIA") or die ("nie ma zamowienia_drukarnia");                      
-                    $wynik = mysql_query("SELECT `ID_regaly`, `Klient`, `Nr_zlecenia`, `Artykul`, `Ilosc`, `Uwagi`, `Ktory_regal` FROM `REGALY_TAB` WHERE `Klient` LIKE '$odbiorca_wybrany%' AND `Nr_zlecenia` LIKE '$filtr_nr_parti_wybrany%' AND `Artykul` LIKE '$filtr_artykul_wybrany%'") or die ("zle pytanie regaly");
+                    $wynik = mysql_query("SELECT `ID_regaly`, `Klient`, `Nr_zlecenia`, `Artykul`, `Ilosc`, `Uwagi`, `Ktory_regal` FROM `REGALY_TAB` WHERE `Klient` LIKE '$odbiorca_wybrany%' AND `Nr_zlecenia` LIKE '$filtr_nr_parti_wybrany%' AND `Artykul` LIKE '$filtr_artykul_wybrany%' AND `Ktory_regal` LIKE '$nazwa_regalu_wybrany%'") or die ("zle pytanie regaly");
                     $polocz->close();
 
                     while($rekord = mysql_fetch_assoc($wynik))
@@ -132,10 +176,11 @@ print"<TABLE cellpadding = '0'  cellspacing = '0' border = '0' style='width: 100
                         $artykul = $rekord['Artykul'];
                         $ktory_regal = $rekord['Ktory_regal'];
                         $ilosc = $rekord['Ilosc'];
+                        $uwagi = $rekord['Uwagi'];
 
 
                         $kolor = '#FFFFFF';
-                        print"<TR><TD id='td_kolor' class='regaly_td_font' bgcolor=$kolor>$klient</TD><TD id='td_kolor' class='regaly_td_font' align = 'left' bgcolor=$kolor>$nr_zlecenia</TD><TD id='td_kolor' class='regaly_td_font' align = 'left' bgcolor=$kolor>$artykul</TD><TD id='td_kolor' class='regaly_td_font' bgcolor=$kolor>$ilosc</TD><TD id='td_kolor' class='regaly_td_font' bgcolor=$kolor>$ktory_regal</TD>";
+                        print"<TR><TD id='td_kolor' class='regaly_td_font' bgcolor=$kolor>$klient</TD><TD id='td_kolor' class='regaly_td_font' align = 'left' bgcolor=$kolor>$nr_zlecenia</TD><TD id='td_kolor' class='regaly_td_font' align = 'left' bgcolor=$kolor>$artykul</TD><TD id='td_kolor' class='regaly_td_font' bgcolor=$kolor>$ilosc</TD><TD id='td_kolor' class='regaly_td_font' bgcolor=$kolor>$uwagi</TD><TD id='td_kolor' class='regaly_td_font' bgcolor=$kolor>$ktory_regal</TD>";
                             /*
                             print"<TD id='td_kolor' align=center bgcolor=$kolor>";
                                     print'<FORM ACTION="wzory_od_klienta.php" METHOD=POST>'; 
