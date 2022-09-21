@@ -108,7 +108,7 @@
                                         
                                         $odbiorca = $_POST['wybrany_klient'];
                                         
-                                        if($odbiorca === "OGANES HMAJAK")
+                                        if($odbiorca === "CZECHY")
                                         {
                                             if($status_do_zmiany_sprawdzony == "DO DRUKU")
                                             {
