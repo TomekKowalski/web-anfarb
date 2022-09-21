@@ -76,7 +76,7 @@ print"<TABLE cellpadding = '0'  cellspacing = '0' border = '0' style='width: 100
                                 $wybrany_rok_combobox = "2022";
                             }
                         }
-                        $odbiorca = "OGANES HMAJAK";
+                        $odbiorca = "CZECHY";
                         if(($wybrany_rok == "") && ($wybrany_status == ""))
                         {
                             

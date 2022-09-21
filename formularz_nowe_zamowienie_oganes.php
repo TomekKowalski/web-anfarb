@@ -46,7 +46,7 @@ print"<TABLE cellpadding = '0'  cellspacing = '0' border = '0' style='width: 100
                         $polocz = new Polocz();
 
                         //$odbiorca = $_GET['odbiorca'];
-                        $odbiorca = "OGANES HMAJAK";
+                        $odbiorca = "CZECHY";
 
                         if($odbiorca == "")
                         {
@@ -414,7 +414,7 @@ print"<TABLE cellpadding = '0'  cellspacing = '0' border = '0' style='width: 100
                                     mysql_select_db("ZAMOWIENIA_DRUKARNIA") or die ("nie ma zamowienia_drukarnia");
 
                                    // $lista_szukaj_artykul = mysql_query("SELECT Nazwa_artykul FROM ARTYKUL_TAB WHERE Nazwa_artykul LIKE '%$szukany_artykul%' ORDER BY Nazwa_artykul;") or die ("zle pytanie");
-                                    $lista_szukaj_artykul = mysql_query("SELECT Artykul_zamowienia FROM ZAMOWIENIA_TAB WHERE Odbiorca_zamowienia = 'OGANES HMAJAK' AND Artykul_zamowienia LIKE '%$szukany_artykul%' GROUP BY Artykul_zamowienia ORDER BY Artykul_zamowienia;") or die ("zle pytanie");
+                                    $lista_szukaj_artykul = mysql_query("SELECT Artykul_zamowienia FROM ZAMOWIENIA_TAB WHERE Odbiorca_zamowienia = 'CZECHY' AND Artykul_zamowienia LIKE '%$szukany_artykul%' GROUP BY Artykul_zamowienia ORDER BY Artykul_zamowienia;") or die ("zle pytanie");
 
                                     $polocz->close();
 
