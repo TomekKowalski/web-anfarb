@@ -70,6 +70,7 @@
                         {	
                                     
                             $odbiorca = $_POST['wybrany_klient'];
+                            $status_wybrany = $_POST['combo_status'];
                             //print"odbiorca : ";
                             //print_r($odbiorca);
                         }
@@ -80,6 +81,7 @@
                         {	
                                     
                             $odbiorca = $_POST['wybrany_klient'];
+                            $status_wybrany = $_POST['combo_status'];
                             //print"odbiorca : ";
                             //print_r($odbiorca);
                         }
