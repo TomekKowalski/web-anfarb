@@ -190,19 +190,62 @@ print"<div align=center>";
                                               {
 
                                                 
-                                                
+                                                if($temp_odbiorca_suma_1 != $odbiorca_zamowienia)
+                                                {
+                                                    //podliczanie metrow szt odbiorcy
+                                                    if($licz_rekordy != 0)
+                                                    {
+                                                        $temp_ilosc_metrow_odbiorca = $temp_ilosc_metrow_odbiorca/45;
+                                                        $temp_ilosc_sztuk_odbiorca += $temp_ilosc_metrow_odbiorca;
+                                                        
+                                                        
+                                                        if($temp_ilosc_sztuk_odbiorca < 1)
+                                                        {
+                                                            $opis_sztuki_odbiorca = "sztuk";
+                                                        }
+                                                        if($temp_ilosc_sztuk_odbiorca >= 1)
+                                                        {
+                                                            $opis_sztuki_odbiorca = "sztuka";
+                                                        }
+                                                        if($temp_ilosc_sztuk_odbiorca >= 2 && $temp_ilosc_sztuk_odbiorca < 5)
+                                                        {
+                                                            $opis_sztuki_odbiorca = "sztuki";
+                                                        }
+                                                        if($temp_ilosc_sztuk_odbiorca > 5)
+                                                        {
+                                                            $opis_sztuki_odbiorca = "sztuk";
+                                                        }
+                                                        
+                                                        $kolor = '#FFFACD';
+                                                              //print"<TR><TD id='td_kolor' bgcolor=$kolor><B><font style= 'size:4; color:blue;'>$odbiorca_zamowienia</font></B></TD><TD id='td_kolor' bgcolor=$kolor></TD><TD id='td_kolor' bgcolor=$kolor></TD></TR>\n";
+                                                        //print"<TR><TD id='td_kolor' bgcolor=$kolor><B><font style= 'font-size:18px; color:red;'>$odbiorca_zamowienia</font></B></TD><TD id='td_kolor' bgcolor=$kolor></TD><TD id='td_kolor' bgcolor=$kolor></TD><TD id='td_kolor' bgcolor=$kolor></TD></TR>\n";
+                                                        print"<TR><TD id='td_kolor' bgcolor=$kolor align=right></TD><TD id='td_kolor' bgcolor=$kolor align=center><B><font size='4' color='#708090'>Suma:  "; echo (int)"$temp_ilosc_sztuk_odbiorca"; print"  $opis_sztuki_odbiorca</font></B></TD><TD id='td_kolor' bgcolor=$kolor></TD><TD id='td_kolor' bgcolor=$kolor></TD></TR>\n";
+                                                        
+                                                        $temp_ilosc_metrow_odbiorca = 0;
+                                                        $temp_ilosc_sztuk_odbiorca = 0;
+                                                    }           
+
+                                                    $temp_odbiorca_suma_1 = $odbiorca_zamowienia;
+
+                                                }
                                                 
 
                                                 $kolor = '#FFFFFF';                                                                
 
                                                 if($temp_uzytkownik != $uzytkownik)
                                                 {
+                                                    
+                                                    
                                                     if($licz_rekordy != 0)
                                                     {
                                                         $temp_ilosc_metrow_uzytkownik = $temp_ilosc_metrow_uzytkownik/45;
                                                         $temp_ilosc_sztuk_uzytkownik += $temp_ilosc_metrow_uzytkownik;
                                                         
-                                                        if($temp_ilosc_sztuk_uzytkownik > 0)
+                                                        if($temp_ilosc_sztuk_uzytkownik < 1)
+                                                        {
+                                                            $opis_sztuki = "sztuk";
+                                                        }
+                                                        if($temp_ilosc_sztuk_uzytkownik >= 1)
                                                         {
                                                             $opis_sztuki = "sztuka";
                                                         }
@@ -243,12 +286,14 @@ print"<div align=center>";
                                                 {
                                                   $ilosc_sztuk += $ilosc; 
                                                   $temp_ilosc_sztuk_uzytkownik += $ilosc;
+                                                  $temp_ilosc_sztuk_odbiorca += $ilosc;
                                                   //print_r($temp_ilosc_sztuk_uzytkownik); print"<br>";
                                                 }
                                                 if(($status_metrow == "raport(y)") || ($status_metrow == "metr(y)"))
                                                 {
                                                   $ilosc_metrow += $ilosc;
                                                   $temp_ilosc_metrow_uzytkownik += $ilosc;
+                                                  $temp_ilosc_metrow_odbiorca += $ilosc;
                                                   //print_r($temp_ilosc_metrow_uzytkownik); print"<br>";
                                                 }
                                                 
@@ -257,11 +302,13 @@ print"<div align=center>";
                                                 $kolor = '#FFFFFF';
                                                 if($temp_odbiorca != $odbiorca_zamowienia)
                                                 {
+                                                    
                                                       $kolor = '#33FF66';
                                                       //print"<TR><TD id='td_kolor' bgcolor=$kolor><B><font style= 'size:4; color:blue;'>$odbiorca_zamowienia</font></B></TD><TD id='td_kolor' bgcolor=$kolor></TD><TD id='td_kolor' bgcolor=$kolor></TD></TR>\n";
                                                       print"<TR><TD id='td_kolor' bgcolor=$kolor><B><font style= 'font-size:18px; color:red;'>$odbiorca_zamowienia</font></B></TD><TD id='td_kolor' bgcolor=$kolor></TD><TD id='td_kolor' bgcolor=$kolor></TD><TD id='td_kolor' bgcolor=$kolor></TD></TR>\n";
                                                       
                                                       $temp_odbiorca = $odbiorca_zamowienia;
+                                                     
 
                                                 }
                                                 
@@ -275,6 +322,8 @@ print"<div align=center>";
 
 
                                               print"<TR><TD id='td_kolor' bgcolor=$kolor>$artykul_zamowienia</TD><TD id='td_kolor' align='right' bgcolor=$kolor>$ilosc</TD><TD id='td_kolor' align = 'center' bgcolor=$kolor>$status_metrow</TD><TD id='td_kolor' align = 'center' bgcolor=$kolor>$status_zamowienia</TD></TR>\n";
+                                              
+                                              
                                             }                                             
                                         }
                                         if($ilosc != 0 && $temp_ilosc_sztuk_uzytkownik == 0 && $status_metrow == "sztuk")
@@ -288,7 +337,7 @@ print"<div align=center>";
                                         }
                                         
                                         //$temp_ilosc_sztuk_uzytkownik = (int)$temp_ilosc_sztuk_uzytkownik;
-                                                        if($temp_ilosc_sztuk_uzytkownik > 0 &&  $temp_ilosc_sztuk_uzytkownik < 1)
+                                                        if($temp_ilosc_sztuk_uzytkownik < 1)
                                                         {
                                                             $opis_sztuki = "sztuk";                                                           
                                                         }
@@ -308,6 +357,36 @@ print"<div align=center>";
                                                         {
                                                             $opis_sztuki = $status_metrow;
                                                         }
+                                                        
+                                                if($temp_odbiorca_suma != $odbiorca_zamowienia)
+                                                {
+                                                        $temp_ilosc_metrow_odbiorca = $temp_ilosc_metrow_odbiorca/45;
+                                                        $temp_ilosc_sztuk_odbiorca += $temp_ilosc_metrow_odbiorca;
+                                                        
+                                                        if($temp_ilosc_sztuk_odbiorca == 0)
+                                                        {
+                                                            $opis_sztuki_odbiorca = "sztuk";
+                                                        }
+                                                        if($temp_ilosc_sztuk_odbiorca > 0)
+                                                        {
+                                                            $opis_sztuki_odbiorca = "sztuka";
+                                                        }
+                                                        if($temp_ilosc_sztuk_odbiorca >= 2 && $temp_ilosc_sztuk_odbiorca < 5)
+                                                        {
+                                                            $opis_sztuki_odbiorca = "sztuki";
+                                                        }
+                                                        if($temp_ilosc_sztuk_odbiorca > 5)
+                                                        {
+                                                            $opis_sztuki_odbiorca = "sztuk";
+                                                        }
+                                                        $kolor = '#FFFACD';
+                                                      //print"<TR><TD id='td_kolor' bgcolor=$kolor><B><font style= 'size:4; color:blue;'>$odbiorca_zamowienia</font></B></TD><TD id='td_kolor' bgcolor=$kolor></TD><TD id='td_kolor' bgcolor=$kolor></TD></TR>\n";
+                                                      print"<TR><TD id='td_kolor' bgcolor=$kolor align=right></TD><TD id='td_kolor' bgcolor=$kolor align=center><B><font size='4' color='#708090'>Suma:  "; echo (int)"$temp_ilosc_sztuk_odbiorca"; print"  $opis_sztuki_odbiorca</font></B></TD><TD id='td_kolor' bgcolor=$kolor></TD><TD id='td_kolor' bgcolor=$kolor></TD></TR>\n";
+                                                        
+                                                      
+                                                      $temp_odbiorca_suma = $odbiorca_zamowienia;
+
+                                                }
                                                 $kolor = '#F3E5F5';
                                                 //print"<TR><TD id='td_kolor' bgcolor=$kolor align=right><B><font size='4' color='black'>Razem:</font></B></TD><TD id='td_kolor' bgcolor=$kolor align=center><B><font size='4' color='black'>"; echo (int)"$temp_ilosc_sztuk_uzytkownik"; print"</font></B></TD><TD id='td_kolor' bgcolor=$kolor>sztuk</TD></TR>\n";
                                                 print"<TR><TD id='td_kolor' bgcolor=$kolor align=right></TD><TD id='td_kolor' bgcolor=$kolor align=center><B><font size='4' color='black'>Razem:  "; echo (int)"$temp_ilosc_sztuk_uzytkownik"; print"  $opis_sztuki</font></B></TD><TD id='td_kolor' bgcolor=$kolor></TD><TD id='td_kolor' bgcolor=$kolor></TD></TR>\n";
