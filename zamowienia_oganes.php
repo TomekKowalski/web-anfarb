@@ -48,9 +48,9 @@ print"<TABLE cellpadding = '0'  cellspacing = '0' border = '0' style='width: 100
                         $lista_odbiorca = mysql_query("SELECT DISTINCT * FROM ODBIORCA_TAB ORDER BY Nazwa_odbiorca") or die ("zle pytanie");
                         $polocz->close();
                             ////////////wyszukiwanie wszystkich wybranego odbiorcy
-                        $rok = array('2013' => '2013','2014' => '2014', '2015' => '2015', '2016' => '2016', '2017' => '2017', '2018' => '2018', '2019' => '2019', '2020' => '2020', '2021' => '2021', '2022' => '2022');
-                        $wybrany_rok = "2022";
-                        $wybrany_rok_combobox = "2022";
+                        $rok = array('2013' => '2013','2014' => '2014', '2015' => '2015', '2016' => '2016', '2017' => '2017', '2018' => '2018', '2019' => '2019', '2020' => '2020', '2021' => '2021', '2022' => '2022', '2023' => '2023');
+                        $wybrany_rok = "2023";
+                        $wybrany_rok_combobox = "2023";
                         $status = array('' => '','DO AKCEPTACJI' => 'DO AKCEPTACJI', 'DO DRUKU' => 'DO DRUKU', 'STABILIZACJA' => 'STABILIZACJA');
                         
                         if($_POST['filtr_uwagi'])
@@ -72,8 +72,8 @@ print"<TABLE cellpadding = '0'  cellspacing = '0' border = '0' style='width: 100
                             } 
                             else
                             {
-                                $wybrany_rok = "2022";
-                                $wybrany_rok_combobox = "2022";
+                                $wybrany_rok = "2023";
+                                $wybrany_rok_combobox = "2023";
                             }
                         }
                         $odbiorca = "CZECHY";

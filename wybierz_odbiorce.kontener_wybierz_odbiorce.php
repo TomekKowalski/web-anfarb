@@ -75,7 +75,7 @@ session_start();
                                 <TD style="width: 15%;">
                                         <!--////////////combobox 02//////////////////-->
                                     <SELECT class="opis_select" NAME="rok" style="width: 98%;">
-                                        <OPTION SELECTED VALUE="">-&gt; 2022</OPTION>
+                                        <OPTION SELECTED VALUE="">-&gt; 2023</OPTION>
                                         <?PHP
                                             foreach($rok as $klucz => $wartosc)
                                             {

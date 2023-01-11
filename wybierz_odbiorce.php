@@ -50,7 +50,7 @@
                             $odbiorcy[$i] = $rekord_odbiorca['Nazwa_odbiorca'];
                             $i++;   
                         }
-                        $rok = array('2013' => '2013','2014' => '2014', '2015' => '2015', '2016' => '2016', '2017' => '2017', '2018' => '2018', '2019' => '2019', '2020' => '2020', '2021' => '2021', '2022' => '2022');
+                        $rok = array('2013' => '2013','2014' => '2014', '2015' => '2015', '2016' => '2016', '2017' => '2017', '2018' => '2018', '2019' => '2019', '2020' => '2020', '2021' => '2021', '2022' => '2022', '2023' => '2023');
                         $status = array('DO AKCEPTACJI' => 'DO AKCEPTACJI', 'DO DRUKU' => 'DO DRUKU', 'WYDRUKOWANE' => 'WYDRUKOWANE', 'MAGAZYN_DAMAZ' => 'MAGAZYN_DAMAZ', 'ZALICZKA' => 'ZALICZKA');
 
 if(!$_POST['opcja'] && !$_POST['opcja02'])  ///NIE wyswietla gdy jest wybrany klient
@@ -81,7 +81,7 @@ if($_POST['opcja'] || $_POST['opcja02'])
                                 }   
                             }else
                             {
-                                $wybrany_rok = '2022';
+                                $wybrany_rok = '2023';
                                 if($_POST['rok_filtr_uwagi'])
                                 {                       
                                     $wybrany_rok = $_POST['rok_filtr_uwagi'];                      

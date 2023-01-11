@@ -60,6 +60,19 @@
                                     <TABLE class="pole_comboBox">
                                         <TR>
                                             <!--<TD class='td_pole_spacja'><B><font class="opis_texbox">NR PARTI: </font></B></TD>-->
+                                            <TD class="td_pole_checkbox">
+                                                <?PHP
+                                                if (isset($_POST['checkbox_art'])) 
+                                                {
+                                                    print '<input type="checkbox" NAME="checkbox_art" VALUE="false" checked><B><font class="opis_texbox"> ART RAZEM :</font></B>';
+                                                }
+                                                else 
+                                                {
+                                                    print '<input type="checkbox" NAME="checkbox_art" VALUE="true"><B><font class="opis_texbox"> ART RAZEM :</font></B>';
+                                                }
+                                                ?>
+                                            </TD>
+                                            
                                             <TD class='td_pole_opis'>
                                                 <?PHP
                                                 $nr_parti_wybrany = $_POST['nr_parti'];
@@ -98,28 +111,17 @@
                     <td align="center">
                         <DIV align="center">
                             <TABLE width=80%>
-                                <TR bgcolor = #6666ff><TD id='td_kolor' class='magazyn_td_font' style='width: 5%;'><B>Lp.</B></TD><TD id='td_kolor' class='magazyn_td_font' style='width: 10%;'><B>NR PARTI</B></TD><TD id='td_kolor' class='magazyn_td_font' style='width: 45%;'><B>ARTYKKUŁ</B></TD><TD id='td_kolor' class='magazyn_td_font' style='width: 5%;'><B>ILOŚĆ SZTUK</B></TD><TD id='td_kolor' class='magazyn_td_font' style='width: 5%;'><B>W / ZAPAS</B></TD><TD id='td_kolor' class='magazyn_td_font' style='width: 20%;'><B>UWAGI</B></TD><TD id='td_kolor' class='magazyn_td_font' style='width: 10%;'><B>TOKA / WÓZEK</B></TD></TR>
-                                    <?PHP
+                                   <?PHP
+                                    if (!isset($_POST['checkbox_art'])) 
+                                    {
+                                        print"<TR bgcolor = #6666ff><TD id='td_kolor' class='magazyn_td_font' style='width: 5%;'><B>Lp.</B></TD><TD id='td_kolor' class='magazyn_td_font' style='width: 10%;'><B>NR PARTI</B></TD><TD id='td_kolor' class='magazyn_td_font' style='width: 45%;'><B>ARTYKKUŁ</B></TD><TD id='td_kolor' class='magazyn_td_font' style='width: 5%;'><B>ILOŚĆ SZTUK</B></TD><TD id='td_kolor' class='magazyn_td_font' style='width: 5%;'><B>W / ZAPAS</B></TD><TD id='td_kolor' class='magazyn_td_font' style='width: 20%;'><B>UWAGI</B></TD><TD id='td_kolor' class='magazyn_td_font' style='width: 10%;'><B>TOKA / WÓZEK</B></TD></TR>";
+                                 
                                         require_once 'class.Polocz.php';
                                         $polocz = new Polocz();
-                                        
-                                        /*
-                                        $polocz->open(); 
-                                        mysql_select_db("ZAMOWIENIA_DRUKARNIA") or die ("nie ma zamowienia_drukarnia");                                  
-                                        $wynik_suma = mysql_query("SELECT sum(METRY_RAPORTY_ZMIANA) AS 'metry_suma' FROM view_wszystko_metry_raporty_sztuki WHERE Artykul_zamowienia != '' AND Artykul_zamowienia != 'Zamówienie nr..' AND Artykul_zamowienia != 'ZZZZ' AND Artykul_zamowienia != 'test 2020' AND Artykul_zamowienia != 'wwwww' AND Artykul_zamowienia != 'DZIANINA PES/T' AND Artykul_zamowienia NOT LIKE 'TKANINA%' AND Artykul_zamowienia != '200 BAWEŁNA' AND Artykul_zamowienia NOT LIKE '%VISKOZA' AND Data BETWEEN '$data_od' AND '$data_do';") or die ("zle pytanie zamowienia sumy");                                                                                              
-                                        $polocz->close();
-                                        
-                                        while($rekord_suma = mysql_fetch_assoc($wynik_suma)){
-                                            $suma_metrow = $rekord_suma['metry_suma'];
-                                        }
-                                         * 
-                                         */
-                                        
+                                                                            
                                         $polocz->open(); 
                                         mysql_select_db("ZAMOWIENIA_DRUKARNIA") or die ("nie ma zamowienia_drukarnia");                                  
                                         $wynik = mysql_query("SELECT Nr_parti, Artykul, Ilosc, Wykorzystane_zapas, Uwagi, Data, Korekta_na_strone, Toka_wozek FROM view_magazyn_dzianin_napawania WHERE Status = '1' and Artykul NOT LIKE '%VISKOZA%' AND Artykul NOT LIKE '%TKANINA%' AND Toka_wozek != 'REGAŁ' AND Nr_parti LIKE '$nr_parti_wybrany%' AND Artykul LIKE '$artykul_wybrany%' GROUP BY ID_Karta_nr ORDER BY Artykul;") or die ("zle pytanie zamowienia");                                                                                              
-                                        //$wynik = mysql_query("SELECT Nr_parti FROM view_magazyn_dzianin_napawania;") or die ("zle pytanie zamowienia");                                                                                              
-                                        //$wynik = mysql_query("SELECT N.Nr_parti AS Nr_parti, N.Artykul AS Artykul, N.Ilosc AS Ilosc, N.Wykorzystane_zapas AS Wykorzystane_zapas, N.Uwagi AS Uwagi, N.Data AS Data, N.Korekta AS Korekta, W.Wykorzystane AS Wykorzystane FROM (view_magazyn_dzianin_napawania N LEFT JOIN view_magazyn_dzianin_suma_wykorzystane W ON N.Nr_parti = W.Nr_parti) WHERE N.Status = '1' and N.Artykul NOT LIKE '%VISKOZA%' AND N.Artykul NOT LIKE '%TKANINA%' AND N.Toka_wozek != 'REGAŁ' AND N.Nr_parti LIKE '$nr_parti_wybrany%' AND N.Artykul LIKE '$artykul_wybrany%' GROUP BY N.ID_Karta_nr ORDER BY N.Artykul;") or die ("zle pytanie zamowienia");                                                                                              
                                         
                                         $polocz->close();
                                         
@@ -139,22 +141,8 @@
                                             
                                             
                                             $ilosc_do_wyswietlenia = (int)($ilosc - $korekta);
-                                            
-                                            /*
-                                            print"<br>";
-                                            print"ROK = "; var_dump($rok);
-                                            print"NR PARTI = "; var_dump($nr_parti);
-                                            print"ARTYKUL = "; var_dump($artykul);
-                                            print"wykorzystane = "; var_dump($suma_metrow);
-                                            print"ilosc = "; var_dump($ilosc);
-                                            print"ilosc_do_wyswietlenia = "; var_dump($ilosc_do_wyswietlenia);
-                                             * 
-                                             */
-                                            
-                                            /*
-                                            $procent = (100 * $metry)/$suma_metrow;
-                                            $procent = round($procent, 2);
-                                            */
+                                            $suma_ilosc_szt += (int)($ilosc_do_wyswietlenia);
+                                                                                     
                                             if($lp % 2)
                                             {
                                                 $kolor = '#FFFFFF';
@@ -166,14 +154,77 @@
                                             
                                         }
                                     
-                                    
+                                    }
+                                    else {
+                                        //print"<TR bgcolor = #6666ff><TD id='td_kolor' class='magazyn_td_font' style='width: 5%;'><B>Lp.</B></TD><TD id='td_kolor' class='magazyn_td_font' style='width: 10%;'><B>NR PARTI</B></TD><TD id='td_kolor' class='magazyn_td_font' style='width: 45%;'><B>ARTYKKUŁ</B></TD><TD id='td_kolor' class='magazyn_td_font' style='width: 5%;'><B>ILOŚĆ SZTUK</B></TD><TD id='td_kolor' class='magazyn_td_font' style='width: 5%;'><B>W / ZAPAS</B></TD><TD id='td_kolor' class='magazyn_td_font' style='width: 20%;'><B>UWAGI</B></TD><TD id='td_kolor' class='magazyn_td_font' style='width: 10%;'><B>TOKA / WÓZEK</B></TD></TR>";
+                                        print"<TR bgcolor = #6666ff><TD id='td_kolor' class='magazyn_td_font' style='width: 5%;'><B>Lp.</B></TD><TD id='td_kolor' class='magazyn_td_font' style='width: 45%;'><B>ARTYKKUŁ</B></TD><TD id='td_kolor' class='magazyn_td_font' style='width: 5%;'><B>ILOŚĆ SZTUK</B></TD><TD id='td_kolor' class='magazyn_td_font' style='width: 5%;'><B> KG </B></TD></TR>";
+                                 
+                                        require_once 'class.Polocz.php';
+                                        $polocz = new Polocz();
+                                                                            
+                                        $polocz->open(); 
+                                        mysql_select_db("ZAMOWIENIA_DRUKARNIA") or die ("nie ma zamowienia_drukarnia");                                  
+                                        //$wynik = mysql_query("SELECT Nr_parti, Artykul, Ilosc, Wykorzystane_zapas, Uwagi, Data, Korekta_na_strone, Toka_wozek FROM view_magazyn_dzianin_napawania WHERE Status = '1' and Artykul NOT LIKE '%VISKOZA%' AND Artykul NOT LIKE '%TKANINA%' AND Toka_wozek != 'REGAŁ' AND Nr_parti LIKE '$nr_parti_wybrany%' AND Artykul LIKE '$artykul_wybrany%' GROUP BY ID_Karta_nr ORDER BY Artykul;") or die ("zle pytanie zamowienia");                                                                                              
+                                        $wynik = mysql_query("SELECT Nr_parti, Artykul, SUM(Ilosc - Korekta_na_strone) AS Ilosc, Wykorzystane_zapas, Uwagi, Data, Toka_wozek FROM view_magazyn_dzianin_napawania WHERE Status = '1' and Artykul NOT LIKE '%VISKOZA%' AND Artykul NOT LIKE '%TKANINA%' AND Toka_wozek != 'REGAŁ' AND Nr_parti LIKE '$nr_parti_wybrany%' AND Artykul LIKE '$artykul_wybrany%' GROUP BY Artykul ORDER BY SUM(Ilosc - Korekta_na_strone) DESC;") or die ("zle pytanie zamowienia");                                                                                              
+                                        
+                                        $polocz->close();
+                                        
+                                        $lp = 1;
+                                        while($rekord = mysql_fetch_assoc($wynik)){
+                                            
+                                            //var_dump($rekord);
+                                            $nr_parti = $rekord['Nr_parti'];                                 
+                                            $artykul = $rekord['Artykul'];
+                                            $ilosc = $rekord['Ilosc'];
+                                            //$ilosc = $rekord['Ilosc'];
+                                            $wykorzystane_zapas = $rekord['Wykorzystane_zapas'];
+                                            $uwagi = $rekord['Uwagi'];
+                                            $rok = $rekord['Data'];
+                                            //$korekta = $rekord['Korekta_na_strone'];
+                                            $toka_wozek = $rekord['Toka_wozek'];
+                                            
+                                            
+                                            
+                                            $ilosc_do_wyswietlenia =  $ilosc;  //(int)( - $korekta);
+                                            $kilogramy = (int)($ilosc * 18);
+                                            
+                                            $suma_ilosc_szt += (int)($ilosc);
+                                            $suma_kg += (int)($kilogramy);
+                                            
+                                                                                     
+                                            if($lp % 2)
+                                            {
+                                                $kolor = '#FFFFFF';
+                                            }else{
+                                                $kolor = '#F0FFFF';
+                                            }  
+                                            print"<TR><TD id='td_kolor' align = 'center' bgcolor=$kolor>$lp</TD><TD id='td_kolor' align='left' bgcolor=$kolor>$artykul</TD><TD id='td_kolor' align = 'center' bgcolor=$kolor>$ilosc_do_wyswietlenia</TD><TD id='td_kolor' align = 'center' bgcolor=$kolor>$kilogramy</TD></TR>\n";
+                                            $lp ++;
+                                            
+                                        }
+                                    }
+ 
                                     ?>
                             </TABLE>
                         </DIV>          
                     </td>
                 </tr>
             </TABLE> 
-<DIV class="dolny_do_tabeli" id="niedrukuj"></DIV>
+    <BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR><BR>
+    <DIV class="dolny_do_tabeli" id="niedrukuj">
+        <?PHP
+        print '<DIV class="mniejszy_panel">';
+            print "<B><font class='opis_paneli'>Ilość sztuk :  "; echo number_format(floatval($suma_ilosc_szt), 0); print"   szt</font></B><br>"; 
+            print "<B><font class='opis_paneli'>Kilogramy :  "; echo number_format(floatval($suma_kg), 0); print"   kg</font></B><br>"; 
+                            
+                            //print "<B><font class='opis_paneli'>Allegro :  "; echo (int)"$suma_allegro"; print"   zł</font></B><br>"; 
+                             
+                                                     
+        print "</DIV>";
+        ?>
+                                                        
+                                                        
+    </DIV>
 
 </body>
 </html>
